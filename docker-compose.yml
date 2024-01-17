@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  mysql:
+    image: mysql/mysql-server:8.0
+    container_name: petudio-mysql
+    environment:
+      TZ: 'Asia/Seoul'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: "petudio"
+      MYSQL_PASSWORD: "petudio"
+      MYSQL_DATABASE: "petudio"
+    ports:
+      - "3306:3306"
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+
+  redis:
+    image: redis:alpine
+    container_name: petudio-redis
+    hostname: redis_boot
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - 6379:6379
+    command: redis-server --port 6379
