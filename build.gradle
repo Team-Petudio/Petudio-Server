@@ -4,6 +4,10 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.4'
 }
 
+jar {
+	enabled = false
+}
+
 group = 'com.nice'
 version = '0.0.1-SNAPSHOT'
 
@@ -29,8 +33,28 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// QueryDSL 설정
+	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def queryDslDir = "build/querydsl/generated"
+
+sourceSets {
+	main.java.srcDirs += [queryDslDir]
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.annotationProcessorGeneratedSourcesDirectory(file(queryDslDir))
+}
+
+clean.doLast {
+	file(queryDslDir).deleteDir()
 }
