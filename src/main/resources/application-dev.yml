@@ -21,7 +21,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-        default_batch_fetch_size: 1000 # default_batch_fetch_size
+        default_batch_fetch_size: 1000 # Lazy Loading 시, N+1 완화
 
   data:
     redis:
