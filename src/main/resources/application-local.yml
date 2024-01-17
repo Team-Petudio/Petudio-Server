@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/petudio?useSSL=false&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&autoReconnection=true&serverTimezone=Asia/Seoul&useLegacyDatetimeCode=false
+    username: petudio
+    password: petudio
+
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 1000 # Lazy Loading 시, N+1 완화
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:sql/schema.sql
+      #data-locations: classpath:sql/data.sql
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+jwt:
+  secret: secretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKeysecretKey
