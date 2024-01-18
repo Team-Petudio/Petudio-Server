@@ -31,6 +31,8 @@ public class AuthController {
     private final CreateTokenService createTokenService;
     private final CommonAuthService commonAuthService;
 
+    private static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
     @Operation(summary = "OAuth2 소셜 회원가입")
     @ResponseStatus(HttpStatus.OK)
@@ -77,8 +79,8 @@ public class AuthController {
     }
 
     private void addTokensToCookie(TokenVO tokenVO, HttpServletResponse response) {
-        addTokenToCookie("accessToken", tokenVO.getAccessToken(), response);
-        addTokenToCookie("refreshToken", tokenVO.getRefreshToken(), response);
+        addTokenToCookie(ACCESS_TOKEN_COOKIE_NAME, tokenVO.getAccessToken(), response);
+        addTokenToCookie(REFRESH_TOKEN_COOKIE_NAME, tokenVO.getRefreshToken(), response);
     }
 
     private void addTokenToCookie(String cookieName, String token, HttpServletResponse response) {
