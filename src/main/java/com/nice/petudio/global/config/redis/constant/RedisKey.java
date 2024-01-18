@@ -1,4 +1,4 @@
-package com.nice.petudio.global.util.redis;
+package com.nice.petudio.global.config.redis.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
