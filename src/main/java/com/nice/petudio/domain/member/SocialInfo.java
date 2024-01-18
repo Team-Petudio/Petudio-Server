@@ -22,7 +22,7 @@ public class SocialInfo {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    public static SocialInfo from(String id, SocialType type) {
+    public static SocialInfo of(String id, SocialType type) {
         return new SocialInfo(id, type);
     }
 }
