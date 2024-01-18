@@ -34,7 +34,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// QueryDSL 설정
+	// QueryDSL
 	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
@@ -42,6 +42,15 @@ dependencies {
 
 	// SpringDoc Swagger
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0"
+
+	// Redis
+	implementation "org.springframework.boot:spring-boot-starter-data-redis"
+	implementation "org.springframework.session:spring-session-data-redis"
+
+	// JWT
+	implementation group: "io.jsonwebtoken", name: "jjwt-api", version: "0.11.5"
+	implementation group: "io.jsonwebtoken", name: "jjwt-impl", version: "0.11.5"
+	implementation group: "io.jsonwebtoken", name: "jjwt-jackson", version: "0.11.5"
 }
 
 tasks.named('test') {
