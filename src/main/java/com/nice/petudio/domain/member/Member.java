@@ -12,12 +12,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "members")
 @Getter
+@Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
@@ -35,4 +37,11 @@ public class Member extends BaseEntity {
 
     @Embedded
     private SocialInfo socialInfo;
+
+    public static Member newInstance(String socialId, SocialType socialType) {
+        return Member.builder()
+                .socialInfo(SocialInfo.of(socialId, socialType))
+                .role(MemberRole.MEMBER)
+                .build();
+    }
 }
