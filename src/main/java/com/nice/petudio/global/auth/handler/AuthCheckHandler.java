@@ -1,12 +1,12 @@
 package com.nice.petudio.global.auth.handler;
 
-import com.nice.petudio.api.member.service.MemberServiceUtils;
+import com.nice.petudio.api.controller.member.service.MemberServiceUtils;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.MemberRole;
 import com.nice.petudio.domain.member.repository.MemberRepository;
-import com.nice.petudio.global.jwt.JwtTokenService;
+import com.nice.petudio.global.auth.jwt.JwtTokenService;
 import com.nice.petudio.global.exception.ForbiddenException;
-import com.nice.petudio.global.exception.UnauthorizedException;
+import com.nice.petudio.global.exception.UnAuthorizedException;
 import com.nice.petudio.global.exception.ValidationException;
 import com.nice.petudio.global.exception.error.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,7 +32,8 @@ public class AuthCheckHandler {
         if (hasAuthority(jwtAccessToken, requiredRoles)) {
             return memberId;
         }
-        throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION, "");
+        throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION,
+                String.format("memberId(%d) 는 접근 권한이 없어, 요청이 수행되지 않았습니다.", memberId));
     }
 
     private String getJwtAccessTokenFromHttpHeader(HttpServletRequest request) {
@@ -40,7 +41,7 @@ public class AuthCheckHandler {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }
-        throw new ValidationException(ErrorCode.INVALID_TOKEN_EXCEPTION, "");
+        throw new ValidationException(ErrorCode.INVALID_JWT_TOKEN_EXCEPTION, ErrorCode.INVALID_JWT_TOKEN_EXCEPTION.getMessage());
     }
 
     public boolean hasAuthority(String jwtAccessToken, List<MemberRole> requiredRoles) {
@@ -52,7 +53,7 @@ public class AuthCheckHandler {
                 return isRoleMatch(member, requiredRoles);
             }
         }
-        throw new UnauthorizedException(ErrorCode.UNAUTHORIZED_TOKEN_EXCEPTION, "");
+        throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION, ErrorCode.UNAUTHORIZED_JWT_EXCEPTION.getMessage());
     }
 
     private static boolean isRoleMatch(Member member, List<MemberRole> requiredRoles) {

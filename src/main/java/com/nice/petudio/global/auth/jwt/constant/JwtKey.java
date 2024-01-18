@@ -1,4 +1,4 @@
-package com.nice.petudio.global.jwt.constant;
+package com.nice.petudio.global.auth.jwt.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

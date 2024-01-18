@@ -1,6 +1,6 @@
-package com.nice.petudio.global.jwt;
+package com.nice.petudio.global.auth.jwt;
 
-import com.nice.petudio.global.jwt.constant.JwtKey;
+import com.nice.petudio.global.auth.jwt.constant.JwtKey;
 import com.nice.petudio.global.config.redis.constant.RedisKey;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -38,7 +38,7 @@ public class JwtTokenService {
     }
 
 
-    public List<String> createToken(Long memberId) {
+    public List<String> createTokenInfo(Long memberId) {
         long now = (new Date()).getTime();
         Date accessTokenExpiryTime = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         Date refreshTokenExpiryTime = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
