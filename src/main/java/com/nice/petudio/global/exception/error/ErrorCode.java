@@ -1,17 +1,20 @@
 package com.nice.petudio.global.exception.error;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Getter
 public enum ErrorCode {
     // Validation Exception
     VALIDATION_EXCEPTION("V001", "잘못된 요청입니다."),
     METHOD_NOT_ALLOWED_EXCEPTION("V002", "지원하지 않는 메소드입니다."),
     UNSUPPORTED_MEDIA_TYPE("V003", "허용하지 않는 미디어 타입입니다."),
-    INVALID_TOKEN_EXCEPTION("V004", "잘못된 JWT 토큰 형식입니다."),
+    INVALID_JWT_TOKEN_EXCEPTION("V004", "존재하지 않거나 잘못된 JWT 토큰 형식입니다."),
+    INVALID_OAUTH2_TOKEN_EXCEPTION("V005", "존재하지 않거나 잘못된 OAuth2 토큰 입니다."),
 
     // Unauthorized Exception
-    UNAUTHORIZED_TOKEN_EXCEPTION("U001", "토큰이 존재하지 않거나 유효하지 않습니다. 다시 로그인 해주세요."),
+    UNAUTHORIZED_JWT_EXCEPTION("U001", "JWT 토큰이 유효하지 않습니다. 다시 로그인 해주세요."),
 
     // Forbidden Exception
     FORBIDDEN_EXCEPTION("F001", "접근 권한이 존재하지 않습니다."),
