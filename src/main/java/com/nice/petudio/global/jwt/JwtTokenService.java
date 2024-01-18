@@ -1,7 +1,7 @@
-package com.nice.petudio.global.auth.jwt;
+package com.nice.petudio.global.jwt;
 
-import com.nice.petudio.global.util.jwt.JwtKey;
-import com.nice.petudio.global.util.redis.RedisKey;
+import com.nice.petudio.global.jwt.constant.JwtKey;
+import com.nice.petudio.global.config.redis.constant.RedisKey;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
