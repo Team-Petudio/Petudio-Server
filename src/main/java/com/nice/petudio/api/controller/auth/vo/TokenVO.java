@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder(access = AccessLevel.PRIVATE)
 public class TokenVO {
 
-	private String accessToken;
-	private String refreshToken;
+    private String accessToken;
+    private String refreshToken;
 
-	public static TokenVO of(String accessToken, String refreshToken) {
-		return TokenVO.builder()
-			.accessToken(accessToken)
-			.refreshToken(refreshToken)
-			.build();
-	}
+    public static TokenVO of(final String accessToken, final String refreshToken) {
+        return TokenVO.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
 }

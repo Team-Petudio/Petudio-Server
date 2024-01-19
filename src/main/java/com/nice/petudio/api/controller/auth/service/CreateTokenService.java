@@ -32,7 +32,7 @@ public class CreateTokenService {
         return TokenVO.of(tokens.get(0), tokens.get(1));
     }
 
-    public TokenVO reissueToken(TokenVO tokenVO) {
+    public TokenVO reissueToken(final TokenVO tokenVO) {
         Long memberId = jwtUtils.parseMemberId(tokenVO.getAccessToken())
                 .orElseThrow();
         Member member = MemberServiceUtils.findMemberById(memberRepository, memberId);

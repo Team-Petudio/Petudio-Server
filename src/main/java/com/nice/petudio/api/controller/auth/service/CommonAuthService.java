@@ -17,7 +17,7 @@ public class CommonAuthService {
 
 	private final JwtUtils jwtUtils;
 
-	public void logout(Long memberId) {
+	public void logout(final Long memberId) {
 		Member member = MemberServiceUtils.findMemberById(memberRepository, memberId);
 		jwtUtils.expireRefreshToken(member.getId());
 	}
