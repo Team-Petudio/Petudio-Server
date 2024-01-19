@@ -85,7 +85,7 @@ public class AuthController {
 
     private void addTokenToCookie(String cookieName, String token, HttpServletResponse response) {
         Cookie cookie = new Cookie(cookieName, token);
-        //cookie.setSecure(true);
+        //cookie.setSecure(true);   //TODO: HTTPS 설정 후에 주석 해제
         cookie.setHttpOnly(true);
 
         response.addCookie(cookie);
