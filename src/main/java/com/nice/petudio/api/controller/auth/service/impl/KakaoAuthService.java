@@ -3,7 +3,7 @@ package com.nice.petudio.api.controller.auth.service.impl;
 import com.nice.petudio.api.controller.auth.dto.request.LoginRequest;
 import com.nice.petudio.api.controller.auth.dto.request.SignUpRequest;
 import com.nice.petudio.api.controller.auth.service.AuthService;
-import com.nice.petudio.api.controller.member.service.MemberService;
+import com.nice.petudio.api.controller.member.service.MemberCommandService;
 import com.nice.petudio.api.controller.member.service.MemberServiceUtils;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.SocialType;
@@ -23,12 +23,12 @@ public class KakaoAuthService implements AuthService {
 
 	private final MemberRepository memberRepository;
 
-	private final MemberService memberService;
+	private final MemberCommandService memberCommandService;
 
 	@Override
 	public Long signUp(SignUpRequest request) {
 		KakaoProfileResponse response = kakaoApiCaller.getProfileInfo(request.getToken());
-		return memberService.registerMember(request.toCreateMemberDto(response));
+		return memberCommandService.registerMember(request.toCreateMemberDto(response));
 	}
 
 	@Override

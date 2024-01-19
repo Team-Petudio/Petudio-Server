@@ -16,7 +16,7 @@ public class MemberServiceUtils {
                         String.format("존재하지 않는 memberId(%d) 입니다.", memberId)));
     }
 
-    static void validateNotExistsMember(MemberRepository memberRepository, String socialId,
+    public static void validateNotExistsMember(MemberRepository memberRepository, String socialId,
                                         SocialType socialType) {
         if (memberRepository.existsBySocialIdAndSocialType(socialId, socialType)) {
             throw new ConflictException(ErrorCode.CONFLICT_MEMBER_EXCEPTION, String.format("이미 존재하는 회원 소셜정보 (%s - %s) 입니다", socialId, socialType));
