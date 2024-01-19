@@ -3,8 +3,8 @@ package com.nice.petudio.api.controller.member.service;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.SocialType;
 import com.nice.petudio.domain.member.repository.MemberRepository;
-import com.nice.petudio.global.exception.ConflictException;
-import com.nice.petudio.global.exception.NotFoundException;
+import com.nice.petudio.global.exception.model.ConflictException;
+import com.nice.petudio.global.exception.model.NotFoundException;
 import com.nice.petudio.global.exception.error.ErrorCode;
 import java.util.Optional;
 

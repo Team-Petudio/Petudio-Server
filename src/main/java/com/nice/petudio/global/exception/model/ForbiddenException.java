@@ -1,4 +1,4 @@
-package com.nice.petudio.global.exception;
+package com.nice.petudio.global.exception.model;
 
 import com.nice.petudio.global.exception.error.ErrorCode;
 
