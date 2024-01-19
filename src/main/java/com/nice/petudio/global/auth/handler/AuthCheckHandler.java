@@ -9,12 +9,13 @@ import com.nice.petudio.global.exception.model.ForbiddenException;
 import com.nice.petudio.global.exception.model.UnAuthorizedException;
 import com.nice.petudio.global.exception.model.ValidationException;
 import com.nice.petudio.global.exception.error.ErrorCode;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
 @Component
@@ -22,13 +23,12 @@ public class AuthCheckHandler {
 
     private final JwtUtils jwtUtils;
     private final MemberRepository memberRepository;
-
-    public final String AUTH_HEADER = "Authorization";
-    public final String TOKEN_PREFIX = "Bearer ";
     private Long memberId;
 
+    private static final String JWT_ACCESS_TOKEN_COOKIE_NAME = "accessToken";
+
     public Long validateAuthority(HttpServletRequest request, List<MemberRole> requiredRoles) {
-        String jwtAccessToken = getJwtAccessTokenFromHttpHeader(request);
+        String jwtAccessToken = getJwtAccessTokenFromHttpCookie(request);
         if (hasAuthority(jwtAccessToken, requiredRoles)) {
             return memberId;
         }
@@ -36,24 +36,32 @@ public class AuthCheckHandler {
                 String.format("memberId(%d)의 접근 권한이 없어, 요청이 수행되지 않았습니다.", memberId));
     }
 
-    private String getJwtAccessTokenFromHttpHeader(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTH_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
-            return bearerToken.substring(TOKEN_PREFIX.length());
+    private String getJwtAccessTokenFromHttpCookie(HttpServletRequest request) {
+        Optional<Cookie> jwtAccessTokenCookie = getJwtAccessTokenCookieFromHttpRequest(request);
+        if (jwtAccessTokenCookie.isPresent()) {
+            return jwtAccessTokenCookie.get().getValue();
         }
-        throw new ValidationException(ErrorCode.INVALID_JWT_TOKEN_EXCEPTION, ErrorCode.INVALID_JWT_TOKEN_EXCEPTION.getMessage());
+        throw new ValidationException(ErrorCode.INVALID_JWT_TOKEN_EXCEPTION,
+                ErrorCode.INVALID_JWT_TOKEN_EXCEPTION.getMessage());
+    }
+
+    private Optional<Cookie> getJwtAccessTokenCookieFromHttpRequest(HttpServletRequest request) {
+        return Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals(JWT_ACCESS_TOKEN_COOKIE_NAME))
+                .findFirst();
     }
 
     public boolean hasAuthority(String jwtAccessToken, List<MemberRole> requiredRoles) {
         if (jwtUtils.validateToken(jwtAccessToken)) {
             Optional<Long> memberId = jwtUtils.parseMemberId(jwtAccessToken);
-            if(memberId.isPresent()) {
+            if (memberId.isPresent()) {
                 Member member = MemberServiceUtils.findMemberById(memberRepository, memberId.get());
                 this.memberId = memberId.get();
                 return isRoleMatch(member, requiredRoles);
             }
         }
-        throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION, ErrorCode.UNAUTHORIZED_JWT_EXCEPTION.getMessage());
+        throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
+                ErrorCode.UNAUTHORIZED_JWT_EXCEPTION.getMessage());
     }
 
     private static boolean isRoleMatch(Member member, List<MemberRole> requiredRoles) {
