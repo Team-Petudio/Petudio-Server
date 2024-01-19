@@ -3,10 +3,11 @@ package com.nice.petudio.global.auth.resolver;
 import static com.nice.petudio.global.auth.auth.AuthInterceptor.MEMBER_ID;
 
 import com.nice.petudio.global.auth.auth.Auth;
-import com.nice.petudio.global.exception.InternalServerException;
+import com.nice.petudio.global.exception.model.InternalServerException;
 import com.nice.petudio.global.exception.error.ErrorCode;
 import java.util.Optional;
 import org.springframework.core.MethodParameter;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -22,8 +23,8 @@ public class MemberIdResolver implements HandlerMethodArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
+                                  NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) {
         Optional<Auth> auth = Optional.ofNullable(parameter.getMethodAnnotation(Auth.class));
         if (auth.isEmpty()) {
             throw new InternalServerException(ErrorCode.INTERNAL_SERVER_EXCEPTION,

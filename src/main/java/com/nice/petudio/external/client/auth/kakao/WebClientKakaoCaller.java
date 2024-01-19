@@ -1,8 +1,8 @@
 package com.nice.petudio.external.client.auth.kakao;
 
 import com.nice.petudio.external.client.auth.kakao.dto.response.KakaoProfileResponse;
-import com.nice.petudio.global.exception.BadGatewayException;
-import com.nice.petudio.global.exception.ValidationException;
+import com.nice.petudio.global.exception.model.BadGatewayException;
+import com.nice.petudio.global.exception.model.ValidationException;
 import com.nice.petudio.global.exception.error.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;

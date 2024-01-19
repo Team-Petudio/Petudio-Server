@@ -7,7 +7,7 @@ import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.repository.MemberRepository;
 import com.nice.petudio.global.auth.jwt.JwtTokenService;
 import com.nice.petudio.global.config.redis.constant.RedisKey;
-import com.nice.petudio.global.exception.UnAuthorizedException;
+import com.nice.petudio.global.exception.model.UnAuthorizedException;
 import com.nice.petudio.global.exception.error.ErrorCode;
 import java.util.List;
 import java.util.Objects;

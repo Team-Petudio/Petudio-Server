@@ -5,9 +5,9 @@ import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.MemberRole;
 import com.nice.petudio.domain.member.repository.MemberRepository;
 import com.nice.petudio.global.auth.jwt.JwtTokenService;
-import com.nice.petudio.global.exception.ForbiddenException;
-import com.nice.petudio.global.exception.UnAuthorizedException;
-import com.nice.petudio.global.exception.ValidationException;
+import com.nice.petudio.global.exception.model.ForbiddenException;
+import com.nice.petudio.global.exception.model.UnAuthorizedException;
+import com.nice.petudio.global.exception.model.ValidationException;
 import com.nice.petudio.global.exception.error.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,7 +33,7 @@ public class AuthCheckHandler {
             return memberId;
         }
         throw new ForbiddenException(ErrorCode.FORBIDDEN_EXCEPTION,
-                String.format("memberId(%d) 는 접근 권한이 없어, 요청이 수행되지 않았습니다.", memberId));
+                String.format("memberId(%d)의 접근 권한이 없어, 요청이 수행되지 않았습니다.", memberId));
     }
 
     private String getJwtAccessTokenFromHttpHeader(HttpServletRequest request) {
