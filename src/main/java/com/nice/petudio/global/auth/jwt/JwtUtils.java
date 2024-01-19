@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import javax.crypto.SecretKey;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class JwtTokenService {
+public class JwtUtils {
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final SecretKey secretKey;
@@ -31,7 +32,7 @@ public class JwtTokenService {
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 30L; // 30일
     private static final long EXPIRED_TIME = 1;
 
-    public JwtTokenService(@Value("${jwt.secret}") String secretKey, RedisTemplate redisTemplate) {
+    public JwtUtils(@Value("${jwt.secret}") String secretKey, RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);

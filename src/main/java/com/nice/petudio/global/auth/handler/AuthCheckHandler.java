@@ -4,7 +4,7 @@ import com.nice.petudio.api.controller.member.service.MemberServiceUtils;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.MemberRole;
 import com.nice.petudio.domain.member.repository.MemberRepository;
-import com.nice.petudio.global.auth.jwt.JwtTokenService;
+import com.nice.petudio.global.auth.jwt.JwtUtils;
 import com.nice.petudio.global.exception.model.ForbiddenException;
 import com.nice.petudio.global.exception.model.UnAuthorizedException;
 import com.nice.petudio.global.exception.model.ValidationException;
@@ -20,7 +20,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class AuthCheckHandler {
 
-    private final JwtTokenService jwtTokenService;
+    private final JwtUtils jwtUtils;
     private final MemberRepository memberRepository;
 
     public final String AUTH_HEADER = "Authorization";
@@ -45,8 +45,8 @@ public class AuthCheckHandler {
     }
 
     public boolean hasAuthority(String jwtAccessToken, List<MemberRole> requiredRoles) {
-        if (jwtTokenService.validateToken(jwtAccessToken)) {
-            Optional<Long> memberId = jwtTokenService.parseMemberId(jwtAccessToken);
+        if (jwtUtils.validateToken(jwtAccessToken)) {
+            Optional<Long> memberId = jwtUtils.parseMemberId(jwtAccessToken);
             if(memberId.isPresent()) {
                 Member member = MemberServiceUtils.findMemberById(memberRepository, memberId.get());
                 this.memberId = memberId.get();
