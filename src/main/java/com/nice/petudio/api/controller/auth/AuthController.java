@@ -37,7 +37,7 @@ public class AuthController {
     @Operation(summary = "OAuth2 소셜 회원가입")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth/signup")
-    public ApiResponse<?> signUp(@Valid @RequestBody SignUpRequest request, HttpServletResponse response) {
+    public ApiResponse<?> signUp(@Valid @RequestBody final SignUpRequest request, HttpServletResponse response) {
         AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
         Long memberId = authService.signUp(request);
 
@@ -49,7 +49,7 @@ public class AuthController {
     @Operation(summary = "OAuth2 소셜 로그인")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth/login")
-    public ApiResponse<?> login(@Valid @RequestBody LoginRequest request, HttpServletResponse response) {
+    public ApiResponse<?> login(@Valid @RequestBody final LoginRequest request, HttpServletResponse response) {
         AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
         Long memberId = authService.login(request);
 
@@ -62,7 +62,7 @@ public class AuthController {
     @Auth
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth/logout")
-    public ApiResponse<String> logout(@MemberId Long memberId) {
+    public ApiResponse<String> logout(@MemberId final Long memberId) {
         commonAuthService.logout(memberId);
 
         return ApiResponse.success();
@@ -71,7 +71,8 @@ public class AuthController {
     @Operation(summary = "JWT 토큰 갱신")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth/reissue")
-    public ApiResponse<?> reissue(@CookieValue String accessToken, @CookieValue String refreshToken, HttpServletResponse response) {
+    public ApiResponse<?> reissue(@CookieValue final String accessToken, @CookieValue final String refreshToken,
+                                  HttpServletResponse response) {
         TokenVO tokenVO = TokenVO.of(accessToken, refreshToken);
         addTokensToCookie(createTokenService.reissueToken(tokenVO), response);
 
