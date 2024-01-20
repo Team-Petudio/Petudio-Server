@@ -32,6 +32,6 @@ public class SignUpRequest {
 
 
 	public CreateMemberRequest toCreateMemberDto(KakaoProfileResponse response) {
-		return CreateMemberRequest.of(response.getId(), socialType, fcmToken, response.getNickname(), response.getThumbnailImage());
+		return CreateMemberRequest.of(response.getId(), socialType, fcmToken);
 	}
 }

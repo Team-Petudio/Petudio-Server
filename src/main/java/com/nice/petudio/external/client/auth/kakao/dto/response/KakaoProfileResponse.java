@@ -17,21 +17,4 @@ import lombok.ToString;
 public class KakaoProfileResponse {
 
 	private String id;
-	private Properties properties;
-
-	@Getter
-	@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-	public class Properties {
-		private String nickname;
-		private String thumbnailImage;
-	}
-
-	public String getNickname() {
-		return properties.nickname;
-	}
-
-	public String getThumbnailImage() {
-		return properties.thumbnailImage;
-	}
-
 }
