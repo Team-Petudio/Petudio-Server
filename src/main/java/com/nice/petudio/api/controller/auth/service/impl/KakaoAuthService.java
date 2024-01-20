@@ -36,6 +36,7 @@ public class KakaoAuthService implements AuthService {
 		KakaoProfileResponse response = kakaoApiCaller.getProfileInfo(request.getToken());
 		Member member = MemberServiceUtils.findMemberBySocialIdAndSocialType(memberRepository, response.getId(),
 			SocialType.KAKAO);
+		member.updateFcmToken(request.getFcmToken());
 		return member.getId();
 	}
 }
