@@ -18,17 +18,12 @@ public class CreateMemberRequest {
     private String socialId;
     private SocialType socialType;
     private String fcmToken;
-    private String nickname;
-    private String profileImageUrl;
 
-    public static CreateMemberRequest of(String socialId, SocialType socialType, String fcmToken, String nickname,
-                                         String profileImageUrl) {
+    public static CreateMemberRequest of(String socialId, SocialType socialType, String fcmToken) {
         return CreateMemberRequest.builder()
                 .socialId(socialId)
                 .socialType(socialType)
                 .fcmToken(fcmToken)
-                .nickname(nickname)
-                .profileImageUrl(profileImageUrl)
                 .build();
     }
 }
