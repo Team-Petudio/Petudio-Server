@@ -12,7 +12,7 @@ public class MemberServiceUtils {
 
     public static Member findMemberById(MemberRepository memberRepository, Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER_EXCEPTION,
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_MEMBER_INFO_EXCEPTION,
                         String.format("존재하지 않는 memberId(%d) 입니다.", memberId)));
     }
 
@@ -27,7 +27,7 @@ public class MemberServiceUtils {
                                                            SocialType socialType) {
         Optional<Member> member = memberRepository.findMemberBySocialIdAndSocialType(socialId, socialType);
         return member.orElseThrow(() -> new NotFoundException(
-                ErrorCode.NOT_FOUND_MEMBER_EXCEPTION,
+                ErrorCode.NOT_FOUND_MEMBER_INFO_EXCEPTION,
                 String.format("존재하지 않는 회원 소셜정보 (%s - %s) 입니다", socialType, socialId)));
     }
 }

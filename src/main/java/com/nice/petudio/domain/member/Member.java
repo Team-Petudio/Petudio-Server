@@ -24,7 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -38,10 +39,15 @@ public class Member extends BaseEntity {
     @Embedded
     private SocialInfo socialInfo;
 
-    public static Member newInstance(String socialId, SocialType socialType) {
+    public static Member newInstance(String socialId, SocialType socialType, String fcmToken) {
         return Member.builder()
                 .socialInfo(SocialInfo.of(socialId, socialType))
+                .fcmToken(fcmToken)
                 .role(MemberRole.MEMBER)
                 .build();
+    }
+
+    public void updateFcmToken(final String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 }

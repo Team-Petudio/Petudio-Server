@@ -22,7 +22,7 @@ public enum ErrorCode {
 
     // NotFound Exception
     NOT_FOUND_EXCEPTION("N001", "존재하지 않는 요청입니다."),
-    NOT_FOUND_MEMBER_EXCEPTION("N002", "탈퇴했거나 존재하지 않는 회원 정보입니다."),
+    NOT_FOUND_MEMBER_INFO_EXCEPTION("N002", "탈퇴했거나 존재하지 않는 회원 정보입니다."),
     NOT_FOUND_CONCEPT_EXCEPTION("N003", "존재하지 않는 컨셉입니다."),
 
     // Conflict Exception

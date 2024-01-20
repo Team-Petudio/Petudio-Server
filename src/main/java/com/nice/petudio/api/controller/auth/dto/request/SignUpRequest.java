@@ -26,8 +26,12 @@ public class SignUpRequest {
 	@NotBlank(message = "{auth.token.notBlank}")
 	private String token;
 
+	@Schema(description = "fcm 토큰", example = "dfdafjdslkfjslfjslifsjvmdsklvdosijsmvsdjvosadjvosd")
+	@NotBlank(message = "{auth.fcmToken.notBlank}")
+	private String fcmToken;
+
 
 	public CreateMemberRequest toCreateMemberDto(KakaoProfileResponse response) {
-		return CreateMemberRequest.of(response.getId(), socialType, response.getNickname(), response.getThumbnailImage());
+		return CreateMemberRequest.of(response.getId(), socialType, fcmToken, response.getNickname(), response.getThumbnailImage());
 	}
 }
