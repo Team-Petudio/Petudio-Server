@@ -24,17 +24,28 @@ public class MemberCommandService {
         MemberServiceUtils.validateNotExistsMember(memberRepository, request.getSocialId(), request.getSocialType());
 
         Member member = memberRepository.save(
-                Member.newInstance(request.getSocialId(), request.getSocialType()));
+                Member.newInstance(request.getSocialId(), request.getSocialType(), request.getFcmToken()));
         pointRepository.save(Point.fromMemberId(member.getId()));
         settingRepository.save(Setting.fromMemberId(member.getId()));
 
         return member.getId();
     }
 
-    public ChangeNotificationStatusResponse changeMemberNotificationStatus(final Long memberId, final boolean notificationStatus) {
+    public ChangeNotificationStatusResponse changeMemberNotificationStatus(final Long memberId,
+                                                                           final boolean notificationStatus) {
         Setting setting = SettingServiceUtils.findSettingByMemberId(settingRepository, memberId);
         setting.changeNotificationStatus(notificationStatus);
 
         return new ChangeNotificationStatusResponse(notificationStatus);
+    }
+
+    public void deleteMember(final Long memberId) {
+        Member member = MemberServiceUtils.findMemberById(memberRepository, memberId);
+        Setting setting = SettingServiceUtils.findSettingByMemberId(settingRepository, memberId);
+        Point point = PointServiceUtils.findPointByMemberId(pointRepository, memberId);
+
+        memberRepository.delete(member);
+        settingRepository.delete(setting);
+        pointRepository.delete(point);
     }
 }

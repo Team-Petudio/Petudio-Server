@@ -10,7 +10,7 @@ public class SettingServiceUtils {
     public static Setting findSettingByMemberId(SettingRepository settingRepository, final Long memberId) {
         return settingRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new NotFoundException(
-                        ErrorCode.NOT_FOUND_MEMBER_EXCEPTION,
+                        ErrorCode.NOT_FOUND_MEMBER_INFO_EXCEPTION,
                         String.format("memberId(%d)의 Setting 정보를 찾을 수 없습니다.", memberId)));
     }
 }
