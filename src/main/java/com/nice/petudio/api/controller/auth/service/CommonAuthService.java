@@ -3,7 +3,7 @@ package com.nice.petudio.api.controller.auth.service;
 import com.nice.petudio.api.controller.member.service.MemberServiceUtils;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.repository.MemberRepository;
-import com.nice.petudio.global.auth.jwt.JwtUtils;
+import com.nice.petudio.common.auth.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

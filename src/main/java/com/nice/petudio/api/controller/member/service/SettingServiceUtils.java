@@ -2,8 +2,8 @@ package com.nice.petudio.api.controller.member.service;
 
 import com.nice.petudio.domain.member.setting.Setting;
 import com.nice.petudio.domain.member.setting.repository.SettingRepository;
-import com.nice.petudio.global.exception.error.ErrorCode;
-import com.nice.petudio.global.exception.model.NotFoundException;
+import com.nice.petudio.common.exception.error.ErrorCode;
+import com.nice.petudio.common.exception.model.NotFoundException;
 
 public class SettingServiceUtils {
 
