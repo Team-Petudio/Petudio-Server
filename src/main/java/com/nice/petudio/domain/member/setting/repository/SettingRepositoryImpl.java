@@ -15,7 +15,7 @@ public class SettingRepositoryImpl implements SettingRepositoryCustom {
     public Optional<Setting> findByMemberId(Long memberId) {
         return Optional.ofNullable(queryFactory
                 .selectFrom(setting)
-                .where(setting.member_id.eq(memberId))
+                .where(setting.memberId.eq(memberId))
                 .fetchOne());
     }
 }
