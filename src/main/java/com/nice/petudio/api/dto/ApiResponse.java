@@ -1,6 +1,6 @@
 package com.nice.petudio.api.dto;
 
-import com.nice.petudio.global.exception.error.ErrorCode;
+import com.nice.petudio.common.exception.error.ErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
