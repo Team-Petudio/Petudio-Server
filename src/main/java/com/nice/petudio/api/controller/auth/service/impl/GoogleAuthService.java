@@ -9,8 +9,8 @@ import com.nice.petudio.api.controller.member.service.MemberServiceUtils;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.SocialType;
 import com.nice.petudio.domain.member.repository.MemberRepository;
-import com.nice.petudio.external.client.auth.kakao.KakaoApiCaller;
-import com.nice.petudio.external.client.auth.kakao.dto.response.KakaoProfileResponse;
+import com.nice.petudio.external.client.auth.google.GoogleApiCaller;
+import com.nice.petudio.external.client.auth.google.dto.response.GoogleProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class KakaoAuthService implements AuthService {
+public class GoogleAuthService implements AuthService {
 
-	private final KakaoApiCaller kakaoApiCaller;
+	private final GoogleApiCaller googleApiCaller;
 
 	private final MemberRepository memberRepository;
 
@@ -28,8 +28,8 @@ public class KakaoAuthService implements AuthService {
 
 	@Override
 	public Long signUp(SignUpRequest request) {
-		KakaoProfileResponse profileInfo = kakaoApiCaller.getProfileInfo(request.getToken());
-		CreateMemberRequest createMemberRequest = CreateMemberRequest.of(profileInfo.getId(), SocialType.KAKAO,
+		GoogleProfileResponse profileInfo = googleApiCaller.getProfileInfo(request.getToken());
+		CreateMemberRequest createMemberRequest = CreateMemberRequest.of(profileInfo.getId(), SocialType.GOOGLE,
 				request.getFcmToken());
 
 		return memberCommandService.registerMember(createMemberRequest);
@@ -37,9 +37,9 @@ public class KakaoAuthService implements AuthService {
 
 	@Override
 	public Long login(LoginRequest request) {
-		KakaoProfileResponse response = kakaoApiCaller.getProfileInfo(request.getToken());
+		GoogleProfileResponse response = googleApiCaller.getProfileInfo(request.getToken());
 		Member member = MemberServiceUtils.findMemberBySocialIdAndSocialType(memberRepository, response.getId(),
-			SocialType.KAKAO);
+			SocialType.GOOGLE);
 		member.updateFcmToken(request.getFcmToken());
 
 		return member.getId();

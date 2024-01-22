@@ -1,8 +1,6 @@
 package com.nice.petudio.api.controller.auth.dto.request;
 
-import com.nice.petudio.api.controller.member.dto.CreateMemberRequest;
 import com.nice.petudio.domain.member.SocialType;
-import com.nice.petudio.external.client.auth.kakao.dto.response.KakaoProfileResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,9 +27,4 @@ public class SignUpRequest {
 	@Schema(description = "fcm 토큰", example = "dfdafjdslkfjslfjslifsjvmdsklvdosijsmvsdjvosadjvosd")
 	@NotBlank(message = "{auth.fcmToken.notBlank}")
 	private String fcmToken;
-
-
-	public CreateMemberRequest toCreateMemberDto(KakaoProfileResponse response) {
-		return CreateMemberRequest.of(response.getId(), socialType, fcmToken);
-	}
 }

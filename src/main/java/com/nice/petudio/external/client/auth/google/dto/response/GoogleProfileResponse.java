@@ -1,9 +1,7 @@
-package com.nice.petudio.external.client.auth.kakao.dto.response;
+package com.nice.petudio.external.client.auth.google.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.nice.petudio.api.controller.auth.dto.request.SignUpRequest;
 import com.nice.petudio.api.controller.member.dto.CreateMemberRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,9 +12,12 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class KakaoProfileResponse {
+public class GoogleProfileResponse{
 
-	private String id;
+    private String id;
+
+    public CreateMemberRequest toSignUpRequest(final CreateMemberRequest request) {
+        return CreateMemberRequest.of(id, request.getSocialType(), request.getFcmToken());
+    }
 }

@@ -12,7 +12,7 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED_EXCEPTION("V003", "지원하지 않는 HTTP 메소드입니다."),
     UNSUPPORTED_MEDIA_TYPE("V004", "허용하지 않는 미디어 타입입니다."),
     INVALID_JWT_TOKEN_EXCEPTION("V005", "존재하지 않거나 잘못된 JWT 토큰 형식입니다."),
-    INVALID_OAUTH2_TOKEN_EXCEPTION("V006", "존재하지 않거나 잘못된 OAuth2 토큰 입니다."),
+    INVALID_OAUTH2_ACCESS_TOKEN_EXCEPTION("V006", "존재하지 않거나 잘못된 OAuth2 Access 토큰 입니다."),
 
     // UnAuthorized Exception
     UNAUTHORIZED_JWT_EXCEPTION("U001", "JWT 토큰이 유효하지 않습니다. 다시 로그인 해주세요."),
