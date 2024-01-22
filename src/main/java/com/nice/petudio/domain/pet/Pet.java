@@ -1,6 +1,5 @@
 package com.nice.petudio.domain.pet;
 
-import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import com.nice.petudio.domain.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +25,7 @@ public class Pet extends BaseEntity {
     private Long id;
 
     @Column(name = "member_id", nullable = false)
-    private Long member_id;
+    private Long memberId;
 
     @Column(name = "pet_name", length = 30, nullable = false)
     private String name;
