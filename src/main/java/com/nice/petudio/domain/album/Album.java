@@ -24,10 +24,10 @@ public class Album extends BaseEntity {
     private Long id;
 
     @Column(name = "member_id", nullable = false)
-    private Long member_id;
+    private Long memberId;
 
     @Column(name = "pet_id", nullable = false)
-    private Long pet_id;
+    private Long petId;
 
     @Column(name = "profile_images", nullable = false)
     private String profileImages; // JSON type
