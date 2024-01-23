@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_URL}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: ${AWS_RDS_URL_DEV}
+    username: ${AWS_RDS_USERNAME_DEV}
+    password: ${AWS_RDS_PASSWORD_DEV}
 
   sql:
     init:
@@ -25,8 +25,8 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
+      host: ${AWS_ELASTICACHE_REDIS_HOST_DEV}
+      port: ${AWS_ELASTICACHE_REDIS_PORT_DEV}
 
 logging:
   level:
