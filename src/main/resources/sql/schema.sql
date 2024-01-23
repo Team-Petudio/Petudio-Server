@@ -14,26 +14,26 @@ CREATE TABLE `members`
     `social_type` varchar(30)  NOT NULL,
     `member_role` varchar(30)  NOT NULL,
     `fcm_token`   varchar(300) NULL,
-    `created_at`  datetime     NULL,
-    `modified_at` datetime     NULL
+    `created_at`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `settings`
 (
     `setting_id`          bigint AUTO_INCREMENT PRIMARY KEY,
-    `member_id`           bigint   NOT NULL,
-    `notification_status` boolean  NOT NULL,
-    `created_at`          datetime NULL,
-    `modified_at`         datetime NULL
+    `member_id`           bigint    NOT NULL,
+    `notification_status` boolean   NOT NULL,
+    `created_at`          timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`         timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `points`
 (
     `point_id`     bigint AUTO_INCREMENT PRIMARY KEY,
-    `member_id`    bigint   NOT NULL,
-    `point_amount` int      NOT NULL,
-    `created_at`   datetime NULL,
-    `modified_at`  datetime NULL
+    `member_id`    bigint    NOT NULL,
+    `point_amount` int       NOT NULL,
+    `created_at`   timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `concepts`
@@ -48,8 +48,8 @@ CREATE TABLE `concepts`
     `concept_fail_image2` varchar(200) NOT NULL,
     `concept_fail_image3` varchar(200) NOT NULL,
     `concept_fail_image4` varchar(200) NOT NULL,
-    `created_at`          datetime     NULL,
-    `modified_at`         datetime     NULL
+    `created_at`          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`         timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `pets`
@@ -58,19 +58,19 @@ CREATE TABLE `pets`
     `member_id`   bigint      NOT NULL,
     `pet_name`    varchar(30) NOT NULL,
     `pet_photos`  json        NOT NULL,
-    `created_at`  datetime    NULL,
-    `modified_at` datetime    NULL
+    `created_at`  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `albums`
 (
     `album_id`       bigint AUTO_INCREMENT PRIMARY KEY,
-    `pet_id`         bigint   NOT NULL,
-    `member_id`      bigint   NOT NULL,
-    `concept_id`     bigint   NOT NULL,
-    `profile_images` json     NULL,
-    `created_at`     datetime NULL,
-    `modified_at`    datetime NULL
+    `pet_id`         bigint    NOT NULL,
+    `member_id`      bigint    NOT NULL,
+    `concept_id`     bigint    NOT NULL,
+    `profile_images` json      NULL,
+    `created_at`     timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`    timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `posts`
@@ -81,6 +81,6 @@ CREATE TABLE `posts`
     `concept_id`        bigint       NOT NULL,
     `profile_image_uri` varchar(300) NOT NULL,
     `like`              int          NOT NULL,
-    `created_at`        datetime     NULL,
-    `modified_at`       datetime     NULL
+    `created_at`        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
