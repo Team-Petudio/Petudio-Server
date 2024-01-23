@@ -66,7 +66,7 @@ public class MemberCommandService {
         List<Album> memberAlbums = AlbumServiceUtils.findAlbumsByMemberId(albumRepository, memberId);
 
         for (Album memberAlbum : memberAlbums) {
-            Long petId = memberAlbum.getPet_id();
+            Long petId = memberAlbum.getPetId();
             if(!memberPetIds.contains(petId)) {
                 petRepository.deleteById(petId);
             }
