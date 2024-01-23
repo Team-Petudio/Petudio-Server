@@ -3,8 +3,6 @@ package com.nice.petudio.external.client.auth.kakao.dto.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.nice.petudio.api.controller.auth.dto.request.SignUpRequest;
-import com.nice.petudio.api.controller.member.dto.CreateMemberRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
