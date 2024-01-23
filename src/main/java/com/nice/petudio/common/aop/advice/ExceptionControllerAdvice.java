@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @Slf4j
 @RestControllerAdvice
@@ -66,6 +67,18 @@ public class ExceptionControllerAdvice {
     protected ApiResponse<Object> handleInvalidFormatException(final Exception exception) {
         log.error(exception.getMessage(), exception);
         return ApiResponse.error(ErrorCode.BAD_REQUEST_EXCEPTION);
+    }
+
+    /**
+     * 404 Not Found
+     */
+    // 존재하지 않는 API 주소로 요청 시 발생
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoResourceFoundException.class)
+    protected ApiResponse<Object> handleNoResourceFoundException(
+            NoResourceFoundException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(ErrorCode.NO_RESOURCE_FOUND_EXCEPTION);
     }
 
 
