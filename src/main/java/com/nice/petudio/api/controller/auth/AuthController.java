@@ -2,12 +2,11 @@ package com.nice.petudio.api.controller.auth;
 
 import com.nice.petudio.api.controller.auth.dto.request.LoginRequest;
 import com.nice.petudio.api.controller.auth.dto.request.ReissueRequest;
-import com.nice.petudio.api.controller.auth.dto.request.SignUpRequest;
-import com.nice.petudio.api.controller.auth.vo.TokenVO;
 import com.nice.petudio.api.controller.auth.service.AuthService;
 import com.nice.petudio.api.controller.auth.service.AuthServiceProvider;
 import com.nice.petudio.api.controller.auth.service.CommonAuthService;
 import com.nice.petudio.api.controller.auth.service.CreateTokenService;
+import com.nice.petudio.api.controller.auth.vo.TokenVO;
 import com.nice.petudio.api.dto.ApiResponse;
 import com.nice.petudio.common.auth.auth.Auth;
 import com.nice.petudio.common.auth.resolver.MemberId;
@@ -17,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,17 +33,6 @@ public class AuthController {
     private static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
     private static final String REFRESH_TOKEN_COOKIE_NAME = "refreshToken";
 
-    @Operation(summary = "OAuth2 소셜 회원가입")
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/auth/signup")
-    public ApiResponse<?> signUp(@Valid @RequestBody final SignUpRequest request, HttpServletResponse response) {
-        AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
-        Long memberId = authService.signUp(request);
-
-        addTokensToCookie(createTokenService.createTokenInfo(memberId), response);
-
-        return ApiResponse.success();
-    }
 
     @Operation(summary = "OAuth2 소셜 로그인")
     @ResponseStatus(HttpStatus.OK)
