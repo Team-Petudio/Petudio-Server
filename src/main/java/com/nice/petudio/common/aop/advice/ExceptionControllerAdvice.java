@@ -5,7 +5,10 @@ import com.nice.petudio.api.dto.ApiResponse;
 import com.nice.petudio.common.exception.error.ErrorCode;
 import com.nice.petudio.common.exception.model.BadGatewayException;
 import com.nice.petudio.common.exception.model.ConflictException;
+import com.nice.petudio.common.exception.model.ForbiddenException;
 import com.nice.petudio.common.exception.model.InternalServerException;
+import com.nice.petudio.common.exception.model.NotFoundException;
+import com.nice.petudio.common.exception.model.UnAuthorizedException;
 import com.nice.petudio.common.exception.model.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -70,6 +73,31 @@ public class ExceptionControllerAdvice {
     }
 
     /**
+     * 401 UnAuthorized
+     */
+    // 회원 인증에 실패했을 경우 발생
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UnAuthorizedException.class)
+    protected ApiResponse<Object> handleUnAuthorizedException(
+            UnAuthorizedException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(exception.getErrorCode());
+    }
+
+    /**
+     * 403 Forbidden
+     */
+    // 요청에 대한 권한이 존재하지 않는 경우 발생
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ForbiddenException.class)
+    protected ApiResponse<Object> handleForbiddenException(
+            ForbiddenException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(exception.getErrorCode());
+    }
+
+
+    /**
      * 404 Not Found
      */
     // 존재하지 않는 API 주소로 요청 시 발생
@@ -78,7 +106,16 @@ public class ExceptionControllerAdvice {
     protected ApiResponse<Object> handleNoResourceFoundException(
             NoResourceFoundException exception) {
         log.error(exception.getMessage(), exception);
-        return ApiResponse.error(ErrorCode.NO_RESOURCE_FOUND_EXCEPTION);
+        return ApiResponse.error(ErrorCode.NOT_FOUND_EXCEPTION);
+    }
+
+    // 존재하지 않는 정보 요청 시 발생
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    protected ApiResponse<Object> handleNotFoundException(
+            NotFoundException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(exception.getErrorCode());
     }
 
 
