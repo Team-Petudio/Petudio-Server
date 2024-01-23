@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.nice.petudio.api.dto.ApiResponse;
 import com.nice.petudio.common.exception.error.ErrorCode;
 import com.nice.petudio.common.exception.model.BadGatewayException;
+import com.nice.petudio.common.exception.model.ConflictException;
 import com.nice.petudio.common.exception.model.InternalServerException;
 import com.nice.petudio.common.exception.model.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,14 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
     protected ApiResponse<Object> handleValidateException(ValidationException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(exception.getErrorCode());
+    }
+
+    // 중복되는 데이터 저장 요청의 경우(e.g. 같은 같은 계정으로 OAuth2 회원가입 시도) 발생
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConflictException.class)
+    protected ApiResponse<Object> handleConflictException(ConflictException exception) {
         log.error(exception.getMessage(), exception);
         return ApiResponse.error(exception.getErrorCode());
     }
