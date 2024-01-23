@@ -15,7 +15,7 @@ public class AlbumRepositoryImpl implements AlbumRepositoryCustom {
     public List<Album> findByMemberId(Long memberId) {
         return queryFactory
                 .selectFrom(album)
-                .where(album.member_id.eq(memberId))
+                .where(album.memberId.eq(memberId))
                 .fetch();
     }
 }
