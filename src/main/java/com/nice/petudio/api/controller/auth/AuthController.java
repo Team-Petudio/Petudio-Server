@@ -1,6 +1,7 @@
 package com.nice.petudio.api.controller.auth;
 
 import com.nice.petudio.api.controller.auth.dto.request.LoginRequest;
+import com.nice.petudio.api.controller.auth.dto.request.ReissueRequest;
 import com.nice.petudio.api.controller.auth.dto.request.SignUpRequest;
 import com.nice.petudio.api.controller.auth.vo.TokenVO;
 import com.nice.petudio.api.controller.auth.service.AuthService;
@@ -71,10 +72,8 @@ public class AuthController {
     @Operation(summary = "JWT 토큰 갱신")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth/reissue")
-    public ApiResponse<?> reissue(@CookieValue final String accessToken, @CookieValue final String refreshToken,
-                                  HttpServletResponse response) {
-        TokenVO tokenVO = TokenVO.of(accessToken, refreshToken);
-        addTokensToCookie(createTokenService.reissueToken(tokenVO), response);
+    public ApiResponse<?> reissue(ReissueRequest request, HttpServletResponse response) {
+        addTokensToCookie(createTokenService.reissueToken(request), response);
 
         return ApiResponse.success();
     }

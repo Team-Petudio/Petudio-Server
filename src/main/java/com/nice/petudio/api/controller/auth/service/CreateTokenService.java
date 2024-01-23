@@ -1,14 +1,15 @@
 package com.nice.petudio.api.controller.auth.service;
 
 
+import com.nice.petudio.api.controller.auth.dto.request.ReissueRequest;
 import com.nice.petudio.api.controller.auth.vo.TokenVO;
 import com.nice.petudio.api.controller.member.service.MemberServiceUtils;
-import com.nice.petudio.domain.member.Member;
-import com.nice.petudio.domain.member.repository.MemberRepository;
 import com.nice.petudio.common.auth.jwt.JwtUtils;
 import com.nice.petudio.common.config.redis.constant.RedisKey;
-import com.nice.petudio.common.exception.model.UnAuthorizedException;
 import com.nice.petudio.common.exception.error.ErrorCode;
+import com.nice.petudio.common.exception.model.UnAuthorizedException;
+import com.nice.petudio.domain.member.Member;
+import com.nice.petudio.domain.member.repository.MemberRepository;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -32,21 +33,22 @@ public class CreateTokenService {
         return TokenVO.of(tokens.get(0), tokens.get(1));
     }
 
-    public TokenVO reissueToken(final TokenVO tokenVO) {
-        Long memberId = jwtUtils.parseMemberId(tokenVO.getAccessToken())
+    public TokenVO reissueToken(final ReissueRequest request) {
+        Long memberId = jwtUtils.parseMemberId(request.accessToken())
                 .orElseThrow();
         Member member = MemberServiceUtils.findMemberById(memberRepository, memberId);
 
-        if (!jwtUtils.validateToken(tokenVO.getRefreshToken())) {
+        if (!jwtUtils.validateToken(request.refreshToken())) {
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
-                    String.format("MemberId(%d)의 토큰 갱신 요청에 포함된 Refresh Token이 유효하지 않아, Token Refresh가 수행되지 않았습니다.", memberId));
+                    String.format("MemberId(%d)의 토큰 갱신 요청에 포함된 Refresh Token이 유효하지 않아, Token Refresh가 수행되지 않았습니다.",
+                            memberId));
         }
         String refreshToken = (String) redisTemplate.opsForValue().get(RedisKey.REFRESH_TOKEN + memberId.toString());
         if (Objects.isNull(refreshToken)) {
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                     String.format("보관 중인 MemberId(%d)의 Refresh Token이 존재하지 않아, Token Refresh가 수행되지 않았습니다.", memberId));
         }
-        if (!refreshToken.equals(tokenVO.getRefreshToken())) {
+        if (!refreshToken.equals(request.refreshToken())) {
             jwtUtils.expireRefreshToken(member.getId());
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                     String.format("보관 중인 MemberId(%d)의 Refresh Token이 유효하지 않아, Token Refresh가 수행되지 않았습니다.", memberId));
