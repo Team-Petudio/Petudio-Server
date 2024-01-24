@@ -54,4 +54,8 @@ public class Member extends BaseEntity {
     public void updateFcmToken(final String fcmToken) {
         this.fcmToken = fcmToken;
     }
+
+    public SocialType getSocialType() {
+        return socialInfo.getSocialType();
+    }
 }
