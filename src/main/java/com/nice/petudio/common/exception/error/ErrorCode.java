@@ -11,12 +11,12 @@ public enum ErrorCode {
     BAD_REQUEST_EXCEPTION("V002", "잘못된 요청입니다."),
     METHOD_NOT_ALLOWED_EXCEPTION("V003", "지원하지 않는 HTTP 메소드입니다."),
     UNSUPPORTED_MEDIA_TYPE("V004", "허용하지 않는 미디어 타입입니다."),
-    INVALID_JWT_TOKEN_EXCEPTION("V005", "존재하지 않거나 잘못된 JWT 토큰 형식입니다."),
+    INVALID_JWT_TOKEN_EXCEPTION("V005", "존재하지 않거나 잘못된 JWT 토큰 형식입니다."), // JWT 토큰 값에 이상이 있을 경우
     INVALID_OAUTH2_ACCESS_TOKEN_EXCEPTION("V006", "존재하지 않거나 잘못된 OAuth2 Access 토큰 입니다."),
     NO_RESOURCE_FOUND_EXCEPTION("V007", "존재하지 않는 API 주소입니다."),
 
     // UnAuthorized Exception
-    UNAUTHORIZED_JWT_EXCEPTION("U001", "JWT 토큰이 유효하지 않습니다. 다시 로그인 해주세요."),
+    UNAUTHORIZED_JWT_EXCEPTION("U001", "JWT 토큰이 유효하지 않습니다. 다시 로그인 해주세요."), // 인증에 실패했을 경우
 
     // Forbidden Exception
     FORBIDDEN_EXCEPTION("F001", "접근 권한이 존재하지 않습니다."),
