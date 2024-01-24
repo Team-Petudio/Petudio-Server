@@ -31,7 +31,7 @@ public class MemberCommandService {
     public Long registerMember(CreateMemberRequest request) {
         MemberServiceUtils.validateNotExistsMember(memberRepository, request.getSocialId(), request.getSocialType());
         Member member = memberRepository.save(
-                Member.newInstance(request.getSocialId(), request.getSocialType(), request.getFcmToken()));
+                Member.newInstance(request.getSocialId(), request.getSocialType(), request.getFcmToken(), request.getEmail()));
         pointRepository.save(Point.fromMemberId(member.getId()));
         settingRepository.save(Setting.fromMemberId(member.getId()));
 

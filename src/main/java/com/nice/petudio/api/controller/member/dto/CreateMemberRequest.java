@@ -17,12 +17,14 @@ public class CreateMemberRequest {
 
     private String socialId;
     private SocialType socialType;
+    private String email;
     private String fcmToken;
 
-    public static CreateMemberRequest of(String socialId, SocialType socialType, String fcmToken) {
+    public static CreateMemberRequest of(String socialId, String email, SocialType socialType, String fcmToken) {
         return CreateMemberRequest.builder()
                 .socialId(socialId)
                 .socialType(socialType)
+                .email(email)
                 .fcmToken(fcmToken)
                 .build();
     }

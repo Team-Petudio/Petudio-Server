@@ -17,4 +17,18 @@ import lombok.ToString;
 public class KakaoProfileResponse {
 
 	private String id;
+	private KakaoAccount kakaoAccount;
+
+
+	public String getEmail() {
+		return kakaoAccount.getEmail();
+	}
+
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Getter
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	class KakaoAccount {
+		private String email;
+	}
 }
