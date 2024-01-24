@@ -14,6 +14,7 @@ public class PetRepositoryImpl implements PetRepositoryCustom {
     public List<Long> findIdsByMemberId(Long memberId) {
         return queryFactory
                 .select(pet.id)
+                .from(pet)
                 .where(pet.memberId.eq(memberId))
                 .fetch();
     }
