@@ -74,15 +74,20 @@ public class JwtUtils {
         return Optional.ofNullable(parseClaims(accessToken).get(JwtKey.MEMBER_ID.getKey(), Long.class));
     }
 
-    private Claims parseClaims(String token) {
+    private Claims parseClaims(String accessToken) {
         try {
+            validateAccessToken(accessToken);
             return Jwts.parserBuilder().setSigningKey(secretKey).build()
-                    .parseClaimsJws(token).getBody();
+                    .parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException exception) {
             return exception.getClaims();
-        } catch (SignatureException exception) {
+        }
+    }
+
+    private void validateAccessToken(String accessToken) {
+        if (!validateToken(accessToken)) {
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
-                    String.format("입력받은 JWT 토큰의 Signature가 잘못되었습니다. (TOKEN: %s)", token));
+                    String.format("입력받은 JWT 토큰이 유효하지 않습니다. (ACCESS_TOKEN: %s)", accessToken));
         }
     }
 
