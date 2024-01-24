@@ -33,22 +33,22 @@ public class CreateTokenService {
         return TokenVO.of(tokens.get(0), tokens.get(1));
     }
 
-    public TokenVO reissueToken(final ReissueRequest request) {
-        Long memberId = jwtUtils.parseMemberId(request.accessToken())
+    public TokenVO reissueToken(ReissueRequest request) {
+        Long memberId = jwtUtils.parseMemberId(request.getAccessToken())
                 .orElseThrow();
         Member member = MemberServiceUtils.findMemberById(memberRepository, memberId);
 
-        if (!jwtUtils.validateToken(request.refreshToken())) {
+        if (!jwtUtils.validateToken(request.getRefreshToken())) {
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                     String.format("MemberId(%d)의 토큰 갱신 요청에 포함된 Refresh Token이 유효하지 않아, Token Refresh가 수행되지 않았습니다.",
                             memberId));
         }
-        String refreshToken = (String) redisTemplate.opsForValue().get(RedisKey.REFRESH_TOKEN + memberId.toString());
+        String refreshToken = (String) redisTemplate.opsForValue().get(RedisKey.REFRESH_TOKEN.getKey() + memberId);
         if (Objects.isNull(refreshToken)) {
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                     String.format("보관 중인 MemberId(%d)의 Refresh Token이 존재하지 않아, Token Refresh가 수행되지 않았습니다.", memberId));
         }
-        if (!refreshToken.equals(request.refreshToken())) {
+        if (!refreshToken.equals(request.getRefreshToken())) {
             jwtUtils.expireRefreshToken(member.getId());
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                     String.format("보관 중인 MemberId(%d)의 Refresh Token이 유효하지 않아, Token Refresh가 수행되지 않았습니다.", memberId));

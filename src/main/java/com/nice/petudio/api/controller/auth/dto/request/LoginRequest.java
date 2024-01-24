@@ -13,8 +13,6 @@ import lombok.ToString;
 
 @ToString
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginRequest {
 
 	@Schema(description = "소셜 로그인 타입", example = "KAKAO")

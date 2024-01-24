@@ -59,7 +59,7 @@ public class AuthController {
     @Operation(summary = "JWT 토큰 갱신")
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/auth/reissue")
-    public ApiResponse<?> reissue(ReissueRequest request, HttpServletResponse response) {
+    public ApiResponse<?> reissue(@Valid @RequestBody ReissueRequest request, HttpServletResponse response) {
         addTokensToCookie(createTokenService.reissueToken(request), response);
 
         return ApiResponse.success();
