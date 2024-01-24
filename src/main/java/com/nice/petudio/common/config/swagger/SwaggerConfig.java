@@ -7,7 +7,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.springdoc.core.utils.SpringDocUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +40,7 @@ public class SwaggerConfig {
 
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes("Bearer Token", securityScheme))
-                .security(Arrays.asList(securityRequirement))
+                .security(Collections.singletonList(securityRequirement))
                 .servers(List.of(serverLocal, serverDev))
                 .info(info);
     }
