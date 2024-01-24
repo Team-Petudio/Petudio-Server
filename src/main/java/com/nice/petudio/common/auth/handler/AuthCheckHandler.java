@@ -51,6 +51,8 @@ public class AuthCheckHandler {
                 this.memberId = memberId.get();
                 return isRoleMatch(member, requiredRoles);
             }
+            throw new ValidationException(ErrorCode.INVALID_JWT_TOKEN_EXCEPTION,
+                    String.format("JWT AccessToken 내에 MemberId가 존재하지 않습니다."));
         }
         throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                 ErrorCode.UNAUTHORIZED_JWT_EXCEPTION.getMessage());

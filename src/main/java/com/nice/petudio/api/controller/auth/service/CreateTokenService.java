@@ -8,6 +8,7 @@ import com.nice.petudio.common.auth.jwt.JwtUtils;
 import com.nice.petudio.common.config.redis.constant.RedisKey;
 import com.nice.petudio.common.exception.error.ErrorCode;
 import com.nice.petudio.common.exception.model.UnAuthorizedException;
+import com.nice.petudio.common.exception.model.ValidationException;
 import com.nice.petudio.domain.member.Member;
 import com.nice.petudio.domain.member.repository.MemberRepository;
 import java.util.List;
@@ -35,7 +36,8 @@ public class CreateTokenService {
 
     public TokenVO reissueToken(ReissueRequest request) {
         Long memberId = jwtUtils.parseMemberId(request.getAccessToken())
-                .orElseThrow();
+                .orElseThrow(() -> new ValidationException(ErrorCode.INVALID_JWT_TOKEN_EXCEPTION,
+                        String.format("JWT AccessToken 내에 MemberId가 존재하지 않습니다.")));
         Member member = MemberServiceUtils.findMemberById(memberRepository, memberId);
 
         if (!jwtUtils.validateToken(request.getRefreshToken())) {
