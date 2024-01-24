@@ -74,6 +74,7 @@ public class AuthController {
         Cookie cookie = new Cookie(cookieName, token);
         //cookie.setSecure(true);   //TODO: HTTPS 설정 후에 주석 해제
         cookie.setHttpOnly(true);
+        cookie.setMaxAge(1);
 
         response.addCookie(cookie);
     }
