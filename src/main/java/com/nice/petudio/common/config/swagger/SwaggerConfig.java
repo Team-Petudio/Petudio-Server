@@ -1,5 +1,6 @@
 package com.nice.petudio.common.config.swagger;
 
+import com.nice.petudio.common.auth.resolver.MemberId;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.Arrays;
 import java.util.List;
+import org.springdoc.core.utils.SpringDocUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,6 +43,11 @@ public class SwaggerConfig {
                 .security(Arrays.asList(securityRequirement))
                 .servers(List.of(serverLocal, serverDev))
                 .info(info);
+    }
+
+    // API 파라미터 중, MemberId 애노테이션 적용 파라미터는 무시
+    static {
+        SpringDocUtils.getConfig().addAnnotationsToIgnore(MemberId.class);
     }
 
     private Server createServer(String url, String description) {
