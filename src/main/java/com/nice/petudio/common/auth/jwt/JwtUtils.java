@@ -2,6 +2,8 @@ package com.nice.petudio.common.auth.jwt;
 
 import com.nice.petudio.common.auth.jwt.constant.JwtKey;
 import com.nice.petudio.common.config.redis.constant.RedisKey;
+import com.nice.petudio.common.exception.error.ErrorCode;
+import com.nice.petudio.common.exception.model.UnAuthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,6 +13,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +59,8 @@ public class JwtUtils {
                 .compact();
 
         redisTemplate.opsForValue()
-                .set(RedisKey.REFRESH_TOKEN.getKey() + memberId, refreshToken, REFRESH_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+                .set(RedisKey.REFRESH_TOKEN.getKey() + memberId, refreshToken, REFRESH_TOKEN_EXPIRE_TIME,
+                        TimeUnit.MILLISECONDS);
 
         return List.of(accessToken, refreshToken);
     }
@@ -74,8 +78,11 @@ public class JwtUtils {
         try {
             return Jwts.parserBuilder().setSigningKey(secretKey).build()
                     .parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims();
+        } catch (ExpiredJwtException exception) {
+            return exception.getClaims();
+        } catch (SignatureException exception) {
+            throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
+                    String.format("입력받은 JWT 토큰의 Signature가 잘못되었습니다. (TOKEN: %s)", token));
         }
     }
 

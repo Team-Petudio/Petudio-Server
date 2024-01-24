@@ -27,6 +27,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
+    /**
+     * 400 Bad Request
+     */
     // 사용자가 요청 값 전달은 성공했지만, 해당 값이 유효하지 않은 경우 발생
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
@@ -76,7 +79,7 @@ public class ExceptionControllerAdvice {
      * 401 UnAuthorized
      */
     // 회원 인증에 실패했을 경우 발생
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnAuthorizedException.class)
     protected ApiResponse<Object> handleUnAuthorizedException(
             UnAuthorizedException exception) {
@@ -88,7 +91,7 @@ public class ExceptionControllerAdvice {
      * 403 Forbidden
      */
     // 요청에 대한 권한이 존재하지 않는 경우 발생
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(ForbiddenException.class)
     protected ApiResponse<Object> handleForbiddenException(
             ForbiddenException exception) {
