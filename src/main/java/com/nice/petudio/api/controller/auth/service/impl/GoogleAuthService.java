@@ -31,7 +31,8 @@ public class GoogleAuthService implements AuthService {
     @Override
     public Long signUp(LoginRequest request) {
         GoogleProfileResponse profileInfo = googleApiCaller.getProfileInfo(request.getToken());
-        CreateMemberRequest createMemberRequest = CreateMemberRequest.of(profileInfo.getId(), SocialType.GOOGLE,
+        CreateMemberRequest createMemberRequest = CreateMemberRequest.of(profileInfo.getId(), profileInfo.getEmail(),
+                SocialType.GOOGLE,
                 request.getFcmToken());
         Long memberId = memberCommandService.registerMember(createMemberRequest);
 

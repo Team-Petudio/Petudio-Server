@@ -22,35 +22,36 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class KakaoAuthService implements AuthService {
 
-	private final KakaoApiCaller kakaoApiCaller;
+    private final KakaoApiCaller kakaoApiCaller;
 
-	private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-	private final MemberCommandService memberCommandService;
+    private final MemberCommandService memberCommandService;
 
-	@Override
-	public Long signUp(LoginRequest request) {
-		KakaoProfileResponse profileInfo = kakaoApiCaller.getProfileInfo(request.getToken());
-		CreateMemberRequest createMemberRequest = CreateMemberRequest.of(profileInfo.getId(), SocialType.KAKAO,
-				request.getFcmToken());
-		Long memberId = memberCommandService.registerMember(createMemberRequest);
+    @Override
+    public Long signUp(LoginRequest request) {
+        KakaoProfileResponse profileInfo = kakaoApiCaller.getProfileInfo(request.getToken());
+        CreateMemberRequest createMemberRequest = CreateMemberRequest.of(profileInfo.getId(), profileInfo.getEmail(),
+                SocialType.KAKAO,
+                request.getFcmToken());
+        Long memberId = memberCommandService.registerMember(createMemberRequest);
 
-		writeSignUpLog(memberId, SocialType.KAKAO);
-		return memberId;
-	}
+        writeSignUpLog(memberId, SocialType.KAKAO);
+        return memberId;
+    }
 
-	@Override
-	public Long login(LoginRequest request) {
-		KakaoProfileResponse response = kakaoApiCaller.getProfileInfo(request.getToken());
-		Optional<Member> member = MemberServiceUtils.findOptionalMemberBySocialInfo(
-				memberRepository, response.getId(),
-				SocialType.KAKAO);
+    @Override
+    public Long login(LoginRequest request) {
+        KakaoProfileResponse response = kakaoApiCaller.getProfileInfo(request.getToken());
+        Optional<Member> member = MemberServiceUtils.findOptionalMemberBySocialInfo(
+                memberRepository, response.getId(),
+                SocialType.KAKAO);
 
-		return loginOrSignUp(request, member);
-	}
+        return loginOrSignUp(request, member);
+    }
 
-	@Override
-	public void writeSignUpLog(Long memberId, SocialType socialType) {
-		log.info(String.format(SIGN_UP_LOG_MESSAGE, memberId, socialType));
-	}
+    @Override
+    public void writeSignUpLog(Long memberId, SocialType socialType) {
+        log.info(String.format(SIGN_UP_LOG_MESSAGE, memberId, socialType));
+    }
 }

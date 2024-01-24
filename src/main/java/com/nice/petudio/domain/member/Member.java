@@ -32,6 +32,9 @@ public class Member extends BaseEntity {
     @Column(name = "fcm_token", length = 300)
     private String fcmToken;
 
+    @Column(name = "email", length = 100)
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "member_role", length = 30, nullable = false)
     private MemberRole role;
@@ -39,9 +42,10 @@ public class Member extends BaseEntity {
     @Embedded
     private SocialInfo socialInfo;
 
-    public static Member newInstance(String socialId, SocialType socialType, String fcmToken) {
+    public static Member newInstance(String socialId, SocialType socialType, String fcmToken, String email) {
         return Member.builder()
                 .socialInfo(SocialInfo.of(socialId, socialType))
+                .email(email)
                 .fcmToken(fcmToken)
                 .role(MemberRole.MEMBER)
                 .build();
