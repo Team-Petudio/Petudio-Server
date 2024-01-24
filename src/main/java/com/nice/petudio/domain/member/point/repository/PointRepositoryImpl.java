@@ -8,7 +8,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class PointRepositoryImpl implements PointRepositoryCustom{
+public class PointRepositoryImpl implements PointRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
