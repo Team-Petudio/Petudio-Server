@@ -1,6 +1,7 @@
 package com.nice.petudio.api.controller.member;
 
 import com.nice.petudio.api.controller.member.dto.ChangeNotificationStatusResponse;
+import com.nice.petudio.api.controller.member.dto.MemberMyPageResponse;
 import com.nice.petudio.api.controller.member.service.MemberCommandService;
 import com.nice.petudio.api.controller.member.service.MemberQueryService;
 import com.nice.petudio.api.dto.ApiResponse;
@@ -46,7 +47,7 @@ public class MemberController {
     @Operation(summary = "[인증] 마이페이지 정보 조회")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/member/mypage")
-    public ApiResponse<?> getMemberMypageInfo(@MemberId final Long memberId) {
+    public ApiResponse<MemberMyPageResponse> getMemberMypageInfo(@MemberId Long memberId) {
         return ApiResponse.success(memberQueryService.getMemberMypageInfo(memberId));
     }
 }
