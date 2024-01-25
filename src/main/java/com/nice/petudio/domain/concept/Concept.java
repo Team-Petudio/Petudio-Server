@@ -3,6 +3,8 @@ package com.nice.petudio.domain.concept;
 import com.nice.petudio.domain.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +25,10 @@ public class Concept extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "concept_id")
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "concept_type", length = 30, nullable = false)
+    private ConceptType conceptType;
 
     @Column(name = "concept_main_image", length = 200, nullable = false)
     private String mainImage;
