@@ -13,7 +13,6 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -76,16 +75,12 @@ public class JwtUtils {
 
     private Claims parseClaims(String accessToken) {
         try {
-            validateAccessToken(accessToken);
             return Jwts.parserBuilder().setSigningKey(secretKey).build()
                     .parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException exception) {
             return exception.getClaims();
-        }
-    }
-
-    private void validateAccessToken(String accessToken) {
-        if (!validateToken(accessToken)) {
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException | DecodingException |
+                 UnsupportedJwtException | IllegalArgumentException e) {
             throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
                     String.format("입력받은 JWT 토큰이 유효하지 않습니다. (ACCESS_TOKEN: %s)", accessToken));
         }
