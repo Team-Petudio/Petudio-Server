@@ -26,7 +26,7 @@ public class AuthCheckHandler {
 
 
     public Long validateAuthority(HttpServletRequest request, List<MemberRole> requiredRoles) {
-        String jwtAccessToken = getJwtAccessTokenFromHttpCookie(request);
+        String jwtAccessToken = getJwtAccessTokenFromHttpHeader(request);
         if (hasAuthority(jwtAccessToken, requiredRoles)) {
             return memberId;
         }
@@ -34,7 +34,7 @@ public class AuthCheckHandler {
                 String.format("memberId(%d)의 접근 권한이 없어, 요청이 수행되지 않았습니다.", memberId));
     }
 
-    private String getJwtAccessTokenFromHttpCookie(HttpServletRequest request) {
+    private String getJwtAccessTokenFromHttpHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring("Bearer ".length());
@@ -52,10 +52,10 @@ public class AuthCheckHandler {
                 return isRoleMatch(member, requiredRoles);
             }
             throw new ValidationException(ErrorCode.INVALID_JWT_TOKEN_EXCEPTION,
-                    String.format("JWT AccessToken 내에 MemberId가 존재하지 않습니다."));
+                    "JWT AccessToken 내에 MemberId가 존재하지 않습니다.");
         }
         throw new UnAuthorizedException(ErrorCode.UNAUTHORIZED_JWT_EXCEPTION,
-                ErrorCode.UNAUTHORIZED_JWT_EXCEPTION.getMessage());
+                String.format("입력받은 JWT 토큰이 유효하지 않습니다. (ACCESS_TOKEN: %s)", jwtAccessToken));
     }
 
     private static boolean isRoleMatch(Member member, List<MemberRole> requiredRoles) {
