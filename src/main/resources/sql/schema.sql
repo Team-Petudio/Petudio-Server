@@ -13,7 +13,7 @@ CREATE TABLE `members`
     `social_id`   varchar(300) NOT NULL,
     `social_type` varchar(30)  NOT NULL,
     `member_role` varchar(30)  NOT NULL,
-    `email`	varchar(100)	NOT NULL,
+    `email`       varchar(100) NOT NULL,
     `fcm_token`   varchar(300) NULL,
     `created_at`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `modified_at` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -40,6 +40,7 @@ CREATE TABLE `points`
 CREATE TABLE `concepts`
 (
     `concept_id`          bigint AUTO_INCREMENT PRIMARY KEY,
+    `concept_type`        varchar(30)  NOT NULL,
     `concept_main_image`  varchar(200) NOT NULL,
     `concept_sub_image1`  varchar(200) NOT NULL,
     `concept_sub_image2`  varchar(200) NOT NULL,
