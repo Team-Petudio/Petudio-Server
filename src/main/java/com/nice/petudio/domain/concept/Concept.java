@@ -31,32 +31,32 @@ public class Concept extends BaseEntity {
     @Column(name = "concept_type", length = 30, nullable = false)
     private ConceptType conceptType;
 
-    @Column(name = "concept_main_image", length = 200, nullable = false)
-    private String mainImage;
+    @Column(name = "concept_main_image_uri", length = 200, nullable = false)
+    private String mainImageUri;
 
-    @Column(name = "concept_sub_image1", length = 200, nullable = false)
-    private String subImage1;
+    @Column(name = "concept_success_image1_uri", length = 200, nullable = false)
+    private String successImage1Uri;
 
-    @Column(name = "concept_sub_image2", length = 200, nullable = false)
-    private String subImage2;
+    @Column(name = "concept_success_image2_uri", length = 200, nullable = false)
+    private String successImage2Uri;
 
-    @Column(name = "concept_sub_image3", length = 200, nullable = false)
-    private String subImage3;
+    @Column(name = "concept_success_image3_uri", length = 200, nullable = false)
+    private String successImage3Uri;
 
-    @Column(name = "concept_sub_image4", length = 200, nullable = false)
-    private String subImage4;
+    @Column(name = "concept_success_image4_uri", length = 200, nullable = false)
+    private String successImage4Uri;
 
-    @Column(name = "concept_fail_image1", length = 200, nullable = false)
-    private String failImage1;
+    @Column(name = "concept_fail_image1_uri", length = 200, nullable = false)
+    private String failImage1lUri;
 
-    @Column(name = "concept_fail_image2", length = 200, nullable = false)
-    private String failImage2;
+    @Column(name = "concept_fail_image2_uri", length = 200, nullable = false)
+    private String failImage2Uri;
 
-    @Column(name = "concept_fail_image3", length = 200, nullable = false)
-    private String failImage3;
+    @Column(name = "concept_fail_image3_uri", length = 200, nullable = false)
+    private String failImage3Uri;
 
-    @Column(name = "concept_fail_image4", length = 200, nullable = false)
-    private String failImage4;
+    @Column(name = "concept_fail_image4_uri", length = 200, nullable = false)
+    private String failImage4Uri;
 
 
     public boolean validateIsNew(LocalDateTime now) {

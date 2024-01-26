@@ -39,19 +39,19 @@ CREATE TABLE `points`
 
 CREATE TABLE `concepts`
 (
-    `concept_id`          bigint AUTO_INCREMENT PRIMARY KEY,
-    `concept_type`        varchar(30)  NOT NULL,
-    `concept_main_image`  varchar(200) NOT NULL,
-    `concept_sub_image1`  varchar(200) NOT NULL,
-    `concept_sub_image2`  varchar(200) NOT NULL,
-    `concept_sub_image3`  varchar(200) NOT NULL,
-    `concept_sub_image4`  varchar(200) NOT NULL,
-    `concept_fail_image1` varchar(200) NOT NULL,
-    `concept_fail_image2` varchar(200) NOT NULL,
-    `concept_fail_image3` varchar(200) NOT NULL,
-    `concept_fail_image4` varchar(200) NOT NULL,
-    `created_at`          timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `modified_at`         timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `concept_id`                 bigint AUTO_INCREMENT PRIMARY KEY,
+    `concept_type`               varchar(30)  NOT NULL,
+    `concept_main_image_uri`     varchar(200) NOT NULL,
+    `concept_success_image1_uri` varchar(200) NOT NULL,
+    `concept_success_image2_uri` varchar(200) NOT NULL,
+    `concept_success_image3_uri` varchar(200) NOT NULL,
+    `concept_success_image4_uri` varchar(200) NOT NULL,
+    `concept_fail_image1_uri`    varchar(200) NOT NULL,
+    `concept_fail_image2_uri`    varchar(200) NOT NULL,
+    `concept_fail_image3_uri`    varchar(200) NOT NULL,
+    `concept_fail_image4_uri`    varchar(200) NOT NULL,
+    `created_at`                 timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`                timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `pets`
