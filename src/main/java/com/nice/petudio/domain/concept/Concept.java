@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -56,4 +57,10 @@ public class Concept extends BaseEntity {
 
     @Column(name = "concept_fail_image4", length = 200, nullable = false)
     private String failImage4;
+
+
+    public boolean validateIsNew(LocalDateTime now) {
+        // 컨셉이 생긴지 90일이 지나지 않았으면 'New 컨셉'에 해당
+        return getCreatedAt().isAfter(now.minusDays(90));
+    }
 }
