@@ -30,6 +30,9 @@ public class Pet extends BaseEntity {
     @Column(name = "pet_name", length = 30, nullable = false)
     private String name;
 
+    @Column(name = "pet_fur_color", length = 30, nullable = false)
+    private String furColor;
+
     @Column(name = "pet_photos", nullable = false)
     private String petPhotos; // JSON type
 }
