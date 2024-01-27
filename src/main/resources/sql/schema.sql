@@ -56,12 +56,13 @@ CREATE TABLE `concepts`
 
 CREATE TABLE `pets`
 (
-    `pet_id`      bigint AUTO_INCREMENT PRIMARY KEY,
-    `member_id`   bigint      NOT NULL,
-    `pet_name`    varchar(30) NOT NULL,
-    `pet_photos`  json        NOT NULL,
-    `created_at`  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `modified_at` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `pet_id`        bigint AUTO_INCREMENT PRIMARY KEY,
+    `member_id`     bigint      NOT NULL,
+    `pet_name`      varchar(30) NOT NULL,
+    `pet_fur_color` varchar(30) NOT NULL,
+    `pet_photos`    json        NOT NULL,
+    `created_at`    timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`   timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `albums`
