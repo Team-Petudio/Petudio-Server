@@ -5,5 +5,5 @@ import lombok.AccessLevel;
 import lombok.Builder;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record ConceptRetrieveResponse(String mainImageUri, String name, String description, Boolean isNew) {
+public record ConceptRetrieveResponse(Long conceptId, String mainImageUri, String name, String description, Boolean isNew) {
 }

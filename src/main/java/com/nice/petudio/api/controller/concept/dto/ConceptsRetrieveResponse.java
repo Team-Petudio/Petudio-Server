@@ -22,7 +22,7 @@ public record ConceptsRetrieveResponse(List<ConceptRetrieveResponse> conceptInfo
             String conceptDescription = MessageUtils.getMessage(messageSource,
                     conceptMessagePrefix + ConceptMessageType.DESCRIPTION.getType());
 
-            conceptsResponse.add(new ConceptRetrieveResponse(concept.getMainImageUri(), conceptName, conceptDescription,
+            conceptsResponse.add(new ConceptRetrieveResponse(concept.getId(), concept.getMainImageUri(), conceptName, conceptDescription,
                     concept.validateIsNew(now)));
         }
         return new ConceptsRetrieveResponse(conceptsResponse);
