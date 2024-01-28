@@ -2,6 +2,7 @@ package com.nice.petudio.domain.pet.repository;
 
 import static com.nice.petudio.domain.pet.QPet.pet;
 
+import com.nice.petudio.domain.pet.Pet;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,14 @@ public class PetRepositoryImpl implements PetRepositoryCustom {
         return queryFactory
                 .select(pet.id)
                 .from(pet)
+                .where(pet.memberId.eq(memberId))
+                .fetch();
+    }
+
+    @Override
+    public List<Pet> findPetsByMemberId(Long memberId) {
+        return queryFactory
+                .selectFrom(pet)
                 .where(pet.memberId.eq(memberId))
                 .fetch();
     }
