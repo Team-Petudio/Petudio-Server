@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 public enum FurColor {
     WHITE,
     BLACK,
-    SPOTTED
+    DYNAMIC
 }
