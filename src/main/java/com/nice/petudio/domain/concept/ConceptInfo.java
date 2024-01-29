@@ -6,9 +6,10 @@ import lombok.Getter;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-public enum ConceptType {
-    CONCEPT_3D("concept.3d."),
-    CONCEPT_TRENDY("concept.trendy.");
+public enum ConceptInfo {
+    DOG_3D("concept.dog.3d.", PetType.DOG),
+    DOG_TRENDY("concept.dog.trendy.", PetType.DOG);
 
     private final String messagePrefix;
+    private final PetType petType;
 }

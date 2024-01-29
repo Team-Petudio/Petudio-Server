@@ -15,15 +15,15 @@ public record ConceptsRetrieveResponse(List<ConceptRetrieveResponse> conceptInfo
         List<ConceptRetrieveResponse> conceptsResponse = new ArrayList<>();
 
         for (Concept concept : concepts) {
-            String conceptMessagePrefix = concept.getConceptType().getMessagePrefix();
+            String conceptMessagePrefix = concept.getInfo().getMessagePrefix();
 
-            String conceptName = MessageUtils.getMessage(messageSource,
+            String name = MessageUtils.getMessage(messageSource,
                     conceptMessagePrefix + ConceptMessageType.NAME.getType());
-            String conceptDescription = MessageUtils.getMessage(messageSource,
+            String descriptionMessage = MessageUtils.getMessage(messageSource,
                     conceptMessagePrefix + ConceptMessageType.DESCRIPTION.getType());
 
-            conceptsResponse.add(new ConceptRetrieveResponse(concept.getId(), concept.getMainImageUri(), conceptName, conceptDescription,
-                    concept.validateIsNew(now)));
+            conceptsResponse.add(new ConceptRetrieveResponse(concept.getId(), concept.getMainImageUri(), name,
+                    descriptionMessage, concept.getInfo().getPetType(), concept.validateIsNew(now)));
         }
         return new ConceptsRetrieveResponse(conceptsResponse);
     }
