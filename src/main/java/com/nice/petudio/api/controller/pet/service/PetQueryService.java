@@ -46,11 +46,13 @@ public class PetQueryService {
     }
 
     public CreatePetImagesUploadUrlsResponse createPreSignedUrlForSavePetImages(Long memberId, CreatePetImagesUploadUrlsRequest request) {
+        String s3DirectoryPath = s3FileService.createS3DirectoryPath(request.petName(), memberId);
+
         List<String> preSignedUrls = new ArrayList<>();
         for(int i = 1; i <= request.imageAmount(); i++) {
-            preSignedUrls.add(s3FileService.getPreSignedUrl(memberId, request.petName(), i));
+            preSignedUrls.add(s3FileService.getPreSignedUrl(s3DirectoryPath, i));
         }
 
-        return new CreatePetImagesUploadUrlsResponse(preSignedUrls);
+        return new CreatePetImagesUploadUrlsResponse(s3DirectoryPath, preSignedUrls);
     }
 }
