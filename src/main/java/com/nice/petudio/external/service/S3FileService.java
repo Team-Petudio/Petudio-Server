@@ -26,12 +26,12 @@ public class S3FileService {
     /**
      * presigned url 발급
      *
-     * @param memberId 회원의 Primary Key
-     * @param fileName 클라이언트가 전달한 파일명 파라미터
+     * @param s3DirectoryPath 파일을 저장할 S3 디렉토리 경로
+     * @param index    이미지 순서
      * @return presigned url
      */
-    public String getPreSignedUrl(final Long memberId, String fileName, int index) {
-        fileName = createPath(BUCKET_DIRECTORY_NAME, fileName, memberId, index, createFileId());
+    public String getPreSignedUrl(String s3DirectoryPath, int index) {
+        String fileName = createFilePath(s3DirectoryPath, index);
 
         GeneratePresignedUrlRequest generatePresignedUrlRequest = getGeneratePreSignedUrlRequest(bucket, fileName);
         URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
@@ -81,15 +81,22 @@ public class S3FileService {
     /**
      * 파일의 전체 경로를 생성
      *
-     * @param prefix 디렉토리 경로
-     * @param memberId 회원 Primary Key
      * @param index 이미지 순서
-     * @param fileName 파일명
-     * @param uuid 파일 UNIQUE ID
      * @return 파일의 전체 경로
      */
-    private String createPath(String prefix, String fileName, Long memberId, int index, String uuid) {
+    private String createFilePath(String directoryPath, int index) {
         // BUCKET_DIRECTORY_NAME/memberId/fileId+fileName
-        return String.format("%s/%d/%s/%d", prefix, memberId, uuid + "-" + fileName, index);
+        return String.format("%s/%d", directoryPath, index);
+    }
+
+    /**
+     * 파일을 저장할 디렉토리 경로를 생성
+     *
+     * @param memberId 회원 Primary Key
+     * @param fileName 파일명
+     * @return 파일의 전체 경로
+     */
+    public String createS3DirectoryPath(String fileName, Long memberId) {
+        return String.format("%s/%d/%s", BUCKET_DIRECTORY_NAME, memberId, createFileId() + "-" + fileName);
     }
 }
