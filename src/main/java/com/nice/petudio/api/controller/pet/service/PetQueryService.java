@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nice.petudio.api.controller.pet.dto.FindMyPetResponse;
 import com.nice.petudio.api.controller.pet.dto.FindMyPetsResponse;
+import com.nice.petudio.api.controller.pet.dto.PetImageUploadInfo;
 import com.nice.petudio.api.controller.pet.dto.PetPhotos;
 import com.nice.petudio.api.controller.pet.dto.CreatePetImagesUploadUrlsRequest;
 import com.nice.petudio.api.controller.pet.dto.CreatePetImagesUploadUrlsResponse;
@@ -11,7 +12,7 @@ import com.nice.petudio.common.exception.error.ErrorCode;
 import com.nice.petudio.common.exception.model.InternalServerException;
 import com.nice.petudio.domain.pet.Pet;
 import com.nice.petudio.domain.pet.repository.PetRepository;
-import com.nice.petudio.external.service.S3FileService;
+import com.nice.petudio.external.service.s3.S3FileService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -45,14 +46,18 @@ public class PetQueryService {
         return new FindMyPetsResponse(petsInfo);
     }
 
-    public CreatePetImagesUploadUrlsResponse createPreSignedUrlForSavePetImages(Long memberId, CreatePetImagesUploadUrlsRequest request) {
-        String s3DirectoryPath = s3FileService.createS3DirectoryPath(request.petName(), memberId);
+    public CreatePetImagesUploadUrlsResponse createPreSignedUrlForSavePetImages(Long memberId,
+                                                                                CreatePetImagesUploadUrlsRequest request) {
+        String s3DirectoryPath = s3FileService.createS3DirectoryPath(memberId);
 
-        List<String> preSignedUrls = new ArrayList<>();
-        for(int i = 1; i <= request.imageAmount(); i++) {
-            preSignedUrls.add(s3FileService.getPreSignedUrl(s3DirectoryPath, i));
+        List<PetImageUploadInfo> petImageUploadInfos = new ArrayList<>();
+        for (int i = 1; i <= request.imageAmount(); i++) {
+            String s3FilePath = s3DirectoryPath + "/" + i;
+            petImageUploadInfos.add(
+                    new PetImageUploadInfo(s3FileService.getPreSignedUrl(s3DirectoryPath, i),
+                            s3FileService.getImageUri(s3FilePath)));
         }
 
-        return new CreatePetImagesUploadUrlsResponse(s3DirectoryPath, preSignedUrls);
+        return new CreatePetImagesUploadUrlsResponse(s3DirectoryPath, petImageUploadInfos);
     }
 }

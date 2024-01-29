@@ -1,4 +1,4 @@
-package com.nice.petudio.external.service;
+package com.nice.petudio.external.service.s3;
 
 import com.amazonaws.HttpMethod;
 import com.amazonaws.services.s3.AmazonS3;
@@ -20,14 +20,17 @@ public class S3FileService {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+    @Value("${cloud.aws.s3.path}")
+    private String s3DefaultPath;
     private static final String BUCKET_DIRECTORY_NAME = "petProfile";
+    private static final String FILE_NAME_PREFIX = "Petudio_";
 
 
     /**
      * presigned url 발급
      *
      * @param s3DirectoryPath 파일을 저장할 S3 디렉토리 경로
-     * @param index    이미지 순서
+     * @param index           이미지 순서
      * @return presigned url
      */
     public String getPreSignedUrl(String s3DirectoryPath, int index) {
@@ -36,6 +39,10 @@ public class S3FileService {
         GeneratePresignedUrlRequest generatePresignedUrlRequest = getGeneratePreSignedUrlRequest(bucket, fileName);
         URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
         return url.toString();
+    }
+
+    public String getImageUri(String filePath) {
+        return s3DefaultPath + filePath;
     }
 
     /**
@@ -93,10 +100,9 @@ public class S3FileService {
      * 파일을 저장할 디렉토리 경로를 생성
      *
      * @param memberId 회원 Primary Key
-     * @param fileName 파일명
      * @return 파일의 전체 경로
      */
-    public String createS3DirectoryPath(String fileName, Long memberId) {
-        return String.format("%s/%d/%s", BUCKET_DIRECTORY_NAME, memberId, createFileId() + "-" + fileName);
+    public String createS3DirectoryPath(Long memberId) {
+        return String.format("%s/%d/%s", BUCKET_DIRECTORY_NAME, memberId, FILE_NAME_PREFIX + createFileId());
     }
 }
