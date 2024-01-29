@@ -28,8 +28,8 @@ public class Concept extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "concept_type", length = 30, nullable = false)
-    private ConceptType conceptType;
+    @Column(name = "concept_info", length = 30, nullable = false)
+    private ConceptInfo info;
 
     @Column(name = "concept_main_image_uri", length = 200, nullable = false)
     private String mainImageUri;
