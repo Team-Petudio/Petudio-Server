@@ -2,5 +2,7 @@ package com.nice.petudio.api.controller.pet.dto;
 
 import java.util.List;
 
-public record CreatePetImagesUploadUrlsResponse(List<String> preSignedUrls) {
+public record CreatePetImagesUploadUrlsResponse(
+        String s3DirectoryPath,
+        List<String> preSignedUrls) {
 }
