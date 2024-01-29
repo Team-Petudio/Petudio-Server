@@ -2,7 +2,6 @@ package com.nice.petudio.api.controller.concept;
 
 import com.nice.petudio.api.controller.concept.dto.ConceptDetailResponse;
 import com.nice.petudio.api.controller.concept.dto.ConceptsRetrieveResponse;
-import com.nice.petudio.api.controller.concept.service.ConceptCommandService;
 import com.nice.petudio.api.controller.concept.service.ConceptQueryService;
 import com.nice.petudio.api.dto.ApiResponse;
 import com.nice.petudio.common.auth.auth.Auth;
@@ -20,10 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ConceptController {
     private final ConceptQueryService conceptQueryService;
-    private final ConceptCommandService conceptCommandService;
 
-    @Auth
-    @Operation(summary = "[인증] AI 프로필 컨셉 전체 조회")
+    @Operation(summary = "AI 프로필 컨셉 전체 조회")
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/concepts")
     public ApiResponse<ConceptsRetrieveResponse> getAllConceptsInfo() {
