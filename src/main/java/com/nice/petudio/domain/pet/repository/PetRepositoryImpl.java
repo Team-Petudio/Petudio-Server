@@ -5,6 +5,7 @@ import static com.nice.petudio.domain.pet.QPet.pet;
 import com.nice.petudio.domain.pet.Pet;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -26,5 +27,13 @@ public class PetRepositoryImpl implements PetRepositoryCustom {
                 .selectFrom(pet)
                 .where(pet.memberId.eq(memberId))
                 .fetch();
+    }
+
+    @Override
+    public Optional<Pet> findPetByS3DirectoryPath(String s3DirectoryPath) {
+        return Optional.ofNullable(queryFactory
+                .selectFrom(pet)
+                .where(pet.s3DirectoryPath.eq(s3DirectoryPath))
+                .fetchOne());
     }
 }
