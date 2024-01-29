@@ -60,7 +60,7 @@ CREATE TABLE `pets`
     `member_id`                   bigint      NOT NULL,
     `pet_name`                    varchar(30) NOT NULL,
     `pet_fur_color`               varchar(30) NOT NULL,
-    `pet_image_s3_directory_path` varchar(30) NOT NULL,
+    `pet_image_s3_directory_path` varchar(100) NOT NULL,
     `pet_photos`                  json        NOT NULL,
     `created_at`                  timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `modified_at`                 timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
