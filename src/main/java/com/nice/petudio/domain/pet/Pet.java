@@ -4,6 +4,8 @@ import com.nice.petudio.api.controller.pet.dto.PetAddRequest;
 import com.nice.petudio.domain.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,6 +35,7 @@ public class Pet extends BaseEntity {
     @Column(name = "pet_name", length = 30, nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "pet_fur_color", length = 30, nullable = false)
     private FurColor furColor;
 
