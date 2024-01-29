@@ -4,5 +4,5 @@ import java.util.List;
 
 public record CreatePetImagesUploadUrlsResponse(
         String s3DirectoryPath,
-        List<String> preSignedUrls) {
+        List<PetImageUploadInfo> petImageUploadInfos) {
 }
