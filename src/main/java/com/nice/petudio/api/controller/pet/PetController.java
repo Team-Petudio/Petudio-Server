@@ -1,13 +1,16 @@
 package com.nice.petudio.api.controller.pet;
 
+import com.nice.petudio.api.controller.pet.dto.CreatePetImagesUploadUrlsResponse;
 import com.nice.petudio.api.controller.pet.dto.FindMyPetsResponse;
 import com.nice.petudio.api.controller.pet.dto.PetAddRequest;
+import com.nice.petudio.api.controller.pet.dto.CreatePetImagesUploadUrlsRequest;
 import com.nice.petudio.api.controller.pet.service.PetCommandService;
 import com.nice.petudio.api.controller.pet.service.PetQueryService;
 import com.nice.petudio.api.dto.ApiResponse;
 import com.nice.petudio.common.auth.auth.Auth;
 import com.nice.petudio.common.auth.resolver.MemberId;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,5 +53,14 @@ public class PetController {
     public ApiResponse<?> addPetInfo(@MemberId final Long memberId, @RequestBody final PetAddRequest request) {
         petCommandService.addPetInfo(memberId, request);
         return ApiResponse.success();
+    }
+
+    @Auth
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "[인증] 반려동물 이미지 저장용 S3 PreSignedURL 요청")
+    @GetMapping("/pet/images/presigned-url")
+    public ApiResponse<CreatePetImagesUploadUrlsResponse> createPreSignedUrlForSavePetImages(
+            @MemberId final Long memberId, @RequestBody @Valid final CreatePetImagesUploadUrlsRequest request) {
+        return ApiResponse.success(petQueryService.createPreSignedUrlForSavePetImages(memberId, request));
     }
 }
