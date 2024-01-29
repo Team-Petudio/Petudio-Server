@@ -30,6 +30,7 @@ public enum ErrorCode {
     // Conflict Exception
     CONFLICT_EXCEPTION("C001", "이미 존재하는 데이터입니다."),
     CONFLICT_MEMBER_EXCEPTION("C002", "이미 해당 계정으로 회원가입이 되어있습니다.\n로그인 해주세요."),
+    CONFLICT_PET_S3_PATH_EXCEPTION("C003", "이미 해당 S3 경로에 반려동물 이미지가 존재합니다."),
 
     // Internal Server Exception
     INTERNAL_SERVER_EXCEPTION("I001", "서버 내부에서 에러가 발생하였습니다."),
