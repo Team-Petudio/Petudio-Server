@@ -9,5 +9,4 @@ public class MessageUtils {
         return messageSource.getMessage(sourceName, null,
                 LocaleContextHolder.getLocale());
     }
-
 }
