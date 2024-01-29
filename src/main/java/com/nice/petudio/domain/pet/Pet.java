@@ -36,6 +36,9 @@ public class Pet extends BaseEntity {
     @Column(name = "pet_fur_color", length = 30, nullable = false)
     private FurColor furColor;
 
+    @Column(name = "pet_image_s3_directory_path", length = 100, nullable = false)
+    private String s3DirectoryPath;
+
     @Column(name = "pet_photos", nullable = false)
     private String petPhotos; // JSON type
 
@@ -46,6 +49,7 @@ public class Pet extends BaseEntity {
                 .name(request.name())
                 .furColor(request.furColor())
                 .petPhotos(petPhotoUrisJson)
+                .s3DirectoryPath(request.s3DirectoryPath())
                 .build();
     }
 }
