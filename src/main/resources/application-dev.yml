@@ -28,6 +28,19 @@ spring:
       host: ${AWS_ELASTICACHE_REDIS_HOST_DEV}
       port: ${AWS_ELASTICACHE_REDIS_PORT_DEV}
 
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_DEV}
+      secretKey: ${AWS_SECRET_KEY_DEV}
+    s3:
+      bucket: ${AWS_S3_BUCKET_NAME}
+      path: ${AWS_S3_FILE_DEFAULT_PATH}
+    region:
+      static: ${AWS_REGION_DEV}
+    stack:
+      auto: false
+
 logging:
   level:
     org:
