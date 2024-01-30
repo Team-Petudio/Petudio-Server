@@ -1,6 +1,7 @@
 package com.nice.petudio.api.controller.pet;
 
 import com.nice.petudio.api.controller.pet.dto.CreatePetImagesUploadUrlsResponse;
+import com.nice.petudio.api.controller.pet.dto.DeletePetImagesRequest;
 import com.nice.petudio.api.controller.pet.dto.FindMyPetsResponse;
 import com.nice.petudio.api.controller.pet.dto.PetAddRequest;
 import com.nice.petudio.api.controller.pet.dto.CreatePetImagesUploadUrlsRequest;
@@ -62,5 +63,14 @@ public class PetController {
     public ApiResponse<CreatePetImagesUploadUrlsResponse> createPreSignedUrlForSavePetImages(
             @MemberId final Long memberId, @RequestBody @Valid final CreatePetImagesUploadUrlsRequest request) {
         return ApiResponse.success(petQueryService.createPreSignedUrlForSavePetImages(memberId, request));
+    }
+
+    @Auth
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "[인증] 반려동물 이미지 삭제 요청")
+    @GetMapping("/pet/images/delete")
+    public ApiResponse<?> deletePetImagesOnS3(@RequestBody @Valid final DeletePetImagesRequest request) {
+        petQueryService.deletePetImagesOnS3(request);
+        return ApiResponse.success();
     }
 }

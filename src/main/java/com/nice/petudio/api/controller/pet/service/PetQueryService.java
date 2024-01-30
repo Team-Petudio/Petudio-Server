@@ -2,6 +2,7 @@ package com.nice.petudio.api.controller.pet.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nice.petudio.api.controller.pet.dto.DeletePetImagesRequest;
 import com.nice.petudio.api.controller.pet.dto.FindMyPetResponse;
 import com.nice.petudio.api.controller.pet.dto.FindMyPetsResponse;
 import com.nice.petudio.api.controller.pet.dto.PetImageUploadInfo;
@@ -46,18 +47,23 @@ public class PetQueryService {
         return new FindMyPetsResponse(petsInfo);
     }
 
-    public CreatePetImagesUploadUrlsResponse createPreSignedUrlForSavePetImages(Long memberId,
-                                                                                CreatePetImagesUploadUrlsRequest request) {
+    public CreatePetImagesUploadUrlsResponse createPreSignedUrlForSavePetImages(final Long memberId,
+                                                                                final CreatePetImagesUploadUrlsRequest request) {
         String s3DirectoryPath = s3FileService.createS3DirectoryPath(memberId);
-
         List<PetImageUploadInfo> petImageUploadInfos = new ArrayList<>();
+
+        // s3Directory 경로를 통해, 요청받은 이미지 갯수 만큼 PreSignedURL, ImageURI 생성
         for (int i = 1; i <= request.imageAmount(); i++) {
             String s3FilePath = s3DirectoryPath + "/" + i;
             petImageUploadInfos.add(
                     new PetImageUploadInfo(s3FileService.getPreSignedUrl(s3DirectoryPath, i),
-                            s3FileService.getImageUri(s3FilePath)));
+                            s3FileService.createImageUri(s3FilePath)));
         }
 
         return new CreatePetImagesUploadUrlsResponse(s3DirectoryPath, petImageUploadInfos);
+    }
+
+    public void deletePetImagesOnS3(final DeletePetImagesRequest request) {
+        s3FileService.deleteImagesByS3DirectoryPath(request.s3DirectoryPath());
     }
 }
