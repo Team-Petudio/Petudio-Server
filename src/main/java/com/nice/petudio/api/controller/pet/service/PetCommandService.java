@@ -9,6 +9,7 @@ import com.nice.petudio.common.exception.model.InternalServerException;
 import com.nice.petudio.common.exception.model.NotFoundException;
 import com.nice.petudio.domain.pet.Pet;
 import com.nice.petudio.domain.pet.repository.PetRepository;
+import com.nice.petudio.external.service.s3.S3FileService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class PetCommandService {
     private final ObjectMapper objectMapper;
+    private final S3FileService s3FileService;
     private final PetRepository petRepository;
 
     public void deletePetInfo(final Long petId, final Long memberId) {
@@ -32,6 +34,7 @@ public class PetCommandService {
 
         if (pet.getMemberId().equals(memberId)) {
             petRepository.delete(pet);
+            s3FileService.deleteImagesByS3DirectoryPath(pet.getS3DirectoryPath());
             log.info(String.format("애완동물 삭제 완료 [petId = %d]", petId));
         }
         throw new NotFoundException(ErrorCode.NOT_FOUND_PET_INFO_EXCEPTION,
