@@ -23,6 +23,7 @@ public record ConceptsRetrieveResponse(List<ConceptRetrieveResponse> conceptInfo
                     conceptMessagePrefix + ConceptMessageType.DESCRIPTION.getType());
 
             conceptsResponse.add(new ConceptRetrieveResponse(concept.getId(), concept.getMainImageUri(), name,
+                    concept.getPrice(), concept.getDiscountedPrice(now),
                     descriptionMessage, concept.getInfo().getPetType(), concept.validateIsNew(now)));
         }
         return new ConceptsRetrieveResponse(conceptsResponse);
