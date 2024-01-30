@@ -41,6 +41,7 @@ CREATE TABLE `concepts`
 (
     `concept_id`                 bigint AUTO_INCREMENT PRIMARY KEY,
     `concept_info`               varchar(30)  NOT NULL,
+    `concept_price`              int          NOT NULL,
     `concept_main_image_uri`     varchar(200) NOT NULL,
     `concept_success_image1_uri` varchar(200) NOT NULL,
     `concept_success_image2_uri` varchar(200) NOT NULL,

@@ -31,6 +31,9 @@ public class Concept extends BaseEntity {
     @Column(name = "concept_info", length = 30, nullable = false)
     private ConceptInfo info;
 
+    @Column(name = "concept_price", nullable = false)
+    private int price;
+
     @Column(name = "concept_main_image_uri", length = 200, nullable = false)
     private String mainImageUri;
 
@@ -62,5 +65,13 @@ public class Concept extends BaseEntity {
     public boolean validateIsNew(LocalDateTime now) {
         // 컨셉이 생긴지 90일이 지나지 않았으면 'New 컨셉'에 해당
         return getCreatedAt().isAfter(now.minusDays(90));
+    }
+
+    public int getDiscountedPrice(LocalDateTime now) {
+        if(validateIsNew(now)) {
+            // isNew가 true이면 30% 할인
+            return price - ((price / 10) * 3);
+        }
+        return price;
     }
 }
