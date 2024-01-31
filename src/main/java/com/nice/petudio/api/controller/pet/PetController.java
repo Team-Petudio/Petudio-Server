@@ -59,7 +59,7 @@ public class PetController {
     @Auth
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "[인증] 반려동물 이미지 저장용 S3 PreSignedURL 요청")
-    @GetMapping("/pet/images/presigned-url")
+    @PostMapping("/pet/images/presigned-url")
     public ApiResponse<CreatePetImagesUploadUrlsResponse> createPreSignedUrlForSavePetImages(
             @MemberId final Long memberId, @RequestBody @Valid final CreatePetImagesUploadUrlsRequest request) {
         return ApiResponse.success(petQueryService.createPreSignedUrlForSavePetImages(memberId, request));
@@ -68,7 +68,7 @@ public class PetController {
     @Auth
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "[인증] 반려동물 이미지 삭제 요청")
-    @GetMapping("/pet/images/delete")
+    @DeleteMapping("/pet/images/delete")
     public ApiResponse<?> deletePetImagesOnS3(@RequestBody @Valid final DeletePetImagesRequest request) {
         petQueryService.deletePetImagesOnS3(request);
         return ApiResponse.success();
