@@ -32,7 +32,7 @@ public class Setting extends BaseEntity {
     private Boolean notificationStatus;
 
 
-    public static Setting fromMemberId(Long memberId) {
+    public static Setting newInstance(Long memberId) {
         return Setting.builder()
                 .memberId(memberId)
                 .notificationStatus(false)
