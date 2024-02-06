@@ -1,6 +1,7 @@
 package com.nice.petudio.api.controller.gift;
 
 import com.nice.petudio.api.controller.gift.dto.GiftGenerateResponse;
+import com.nice.petudio.api.controller.gift.dto.GiftsRetrieveResponse;
 import com.nice.petudio.api.controller.gift.service.GiftCodeGenerator;
 import com.nice.petudio.api.controller.gift.service.GiftCommandService;
 import com.nice.petudio.api.controller.gift.service.GiftQueryService;
@@ -11,6 +12,7 @@ import com.nice.petudio.common.auth.resolver.MemberId;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,5 +38,12 @@ public class GiftController {
     public ApiResponse<?> useGift(@MemberId final Long memberId, @RequestParam final String giftCode) {
         giftCommandService.useGift(memberId, giftCode);
         return ApiResponse.success();
+    }
+
+    @Operation(summary = "[인증] 기프트 조회")
+    @Auth
+    @GetMapping("/gifts")
+    public ApiResponse<GiftsRetrieveResponse> findGifts(@MemberId final Long memberId) {
+        return ApiResponse.success(giftQueryService.findGiftsByMemberId(memberId));
     }
 }

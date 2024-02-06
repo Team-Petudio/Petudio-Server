@@ -4,6 +4,8 @@ import static com.nice.petudio.domain.gift.QGift.gift;
 
 import com.nice.petudio.domain.gift.Gift;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
@@ -17,5 +19,14 @@ public class GiftRepositoryImpl implements GiftRepositoryCustom {
                 .selectFrom(gift)
                 .where(gift.code.eq(giftCode))
                 .fetchOne());
+    }
+
+    @Override
+    public List<Gift> findUsableGiftsByBuyerId(Long memberId) {
+        return queryFactory.selectFrom(gift)
+                .where(gift.buyerId.eq(memberId))
+                .where(gift.isUsed.eq(false))
+                .where(gift.expiredAt.gt(LocalDateTime.now()))
+                .fetch();
     }
 }
