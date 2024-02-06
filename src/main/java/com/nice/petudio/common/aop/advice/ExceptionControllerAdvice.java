@@ -10,6 +10,7 @@ import com.nice.petudio.common.exception.model.InternalServerException;
 import com.nice.petudio.common.exception.model.NotFoundException;
 import com.nice.petudio.common.exception.model.UnAuthorizedException;
 import com.nice.petudio.common.exception.model.ValidationException;
+import jakarta.validation.UnexpectedTypeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -62,6 +63,17 @@ public class ExceptionControllerAdvice {
         log.error(exception.getMessage(), exception);
         return ApiResponse.error(ErrorCode.BAD_REQUEST_EXCEPTION);
     }
+
+    // 설정해놓은 Spring Validation 애노테이션으로 처리할 수 있는 타입이 아닐 경우에 발생
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UnexpectedTypeException.class)
+    protected ApiResponse<Object> handleUnexpectedTypeException(
+            UnexpectedTypeException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(ErrorCode.BAD_REQUEST_EXCEPTION);
+    }
+
+
 
     // HTTP 메시지를 읽을 수 없는 경우, 데이터의 형식이 유효한 자바 타입으로 변환되지 못할 경우, 서블릿 요청과 관련된 바인딩 오류가 발생한 경우
     @ResponseStatus(HttpStatus.BAD_REQUEST)
