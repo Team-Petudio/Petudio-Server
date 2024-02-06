@@ -1,13 +1,14 @@
 package com.nice.petudio.domain.gift;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nice.petudio.domain.base.BaseEntity;
-import com.nice.petudio.domain.concept.ConceptInfo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,11 +40,16 @@ public class Gift extends BaseEntity {
     @Column(name = "is_used", nullable = false)
     private Boolean isUsed;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @Column(name = "expired_at", updatable = false)
+    private LocalDateTime expiredAt;
+
     public static Gift newInstance(Long memberId, String code) {
         return Gift.builder()
                 .code(code)
                 .buyerId(memberId)
                 .isUsed(false)
+                .expiredAt(LocalDateTime.now().plusYears(1L))
                 .build();
     }
 
