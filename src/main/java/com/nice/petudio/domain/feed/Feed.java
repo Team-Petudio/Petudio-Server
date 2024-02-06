@@ -1,4 +1,4 @@
-package com.nice.petudio.domain.post;
+package com.nice.petudio.domain.feed;
 
 import com.nice.petudio.domain.base.BaseEntity;
 import jakarta.persistence.Column;
@@ -13,15 +13,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "feeds")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post extends BaseEntity {
+public class Feed extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "feed_id")
     private Long id;
 
     @Column(name = "member_id", nullable = false)
@@ -35,7 +35,4 @@ public class Post extends BaseEntity {
 
     @Column(name = "profile_image_uri", length = 300, nullable = false)
     private String profileImageUri;
-
-    @Column(name = "like", nullable = false)
-    private int like;
 }
