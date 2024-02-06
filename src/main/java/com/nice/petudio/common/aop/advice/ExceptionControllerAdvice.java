@@ -39,14 +39,6 @@ public class ExceptionControllerAdvice {
         return ApiResponse.error(exception.getErrorCode());
     }
 
-    // 중복되는 데이터 저장 요청의 경우(e.g. 같은 같은 계정으로 OAuth2 회원가입 시도) 발생
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConflictException.class)
-    protected ApiResponse<Object> handleConflictException(ConflictException exception) {
-        log.error(exception.getMessage(), exception);
-        return ApiResponse.error(exception.getErrorCode());
-    }
-
     // @Valid or @Validated 바인딩 에러시 발생
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -72,8 +64,6 @@ public class ExceptionControllerAdvice {
         log.error(exception.getMessage(), exception);
         return ApiResponse.error(ErrorCode.BAD_REQUEST_EXCEPTION);
     }
-
-
 
     // HTTP 메시지를 읽을 수 없는 경우, 데이터의 형식이 유효한 자바 타입으로 변환되지 못할 경우, 서블릿 요청과 관련된 바인딩 오류가 발생한 경우
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -144,6 +134,18 @@ public class ExceptionControllerAdvice {
             HttpRequestMethodNotSupportedException exception) {
         log.error(exception.getMessage(), exception);
         return ApiResponse.error(ErrorCode.METHOD_NOT_ALLOWED_EXCEPTION);
+    }
+
+
+    /**
+     * 409 Conflict
+     */
+    // 중복되는 데이터 저장 요청의 경우(e.g. 같은 같은 계정으로 OAuth2 회원가입 시도) 발생
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ConflictException.class)
+    protected ApiResponse<Object> handleConflictException(ConflictException exception) {
+        log.error(exception.getMessage(), exception);
+        return ApiResponse.error(exception.getErrorCode());
     }
 
 
