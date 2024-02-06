@@ -95,9 +95,10 @@ CREATE TABLE `posts`
 CREATE TABLE `gifts`
 (
     `gift_id`     bigint AUTO_INCREMENT PRIMARY KEY,
-    `member_id`   bigint       NULL,
-    `gift_code` varchar(100) NOT NULL,
-    `is_used`     boolean      NOT NULL,
-    `created_at`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `modified_at` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `buyer_id`    bigint      NOT NULL,
+    `user_id`     bigint      NULL,
+    `gift_code`   varchar(32) NOT NULL,
+    `is_used`     boolean     NOT NULL,
+    `created_at`  datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at` datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

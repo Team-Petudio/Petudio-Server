@@ -27,8 +27,11 @@ public class Gift extends BaseEntity {
     @Column(name = "gift_id")
     private Long id;
 
-    @Column(name = "member_id")
-    private Long user_id; // 기프트 사용자 아이디
+    @Column(name = "buyer_id")
+    private Long buyerId; // 기프트 구매자 아이디
+
+    @Column(name = "user_id")
+    private Long userId; // 기프트 사용자 아이디
 
     @Column(name = "gift_code", length = 100, nullable = false)
     private String code;
@@ -36,10 +39,20 @@ public class Gift extends BaseEntity {
     @Column(name = "is_used", nullable = false)
     private Boolean isUsed;
 
-    public static Gift newInstance(String code) {
+    public static Gift newInstance(Long memberId, String code) {
         return Gift.builder()
                 .code(code)
+                .buyerId(memberId)
                 .isUsed(false)
                 .build();
+    }
+
+    public void use(final Long userId) {
+        this.userId = userId;
+        isUsed = true;
+    }
+
+    public boolean isUsed() {
+        return isUsed;
     }
 }

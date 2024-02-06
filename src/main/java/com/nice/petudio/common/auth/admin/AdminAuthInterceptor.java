@@ -1,5 +1,7 @@
 package com.nice.petudio.common.auth.admin;
 
+import static com.nice.petudio.common.auth.auth.AuthInterceptor.MEMBER_ID;
+
 import com.nice.petudio.domain.member.MemberRole;
 import com.nice.petudio.common.auth.handler.AuthCheckHandler;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +29,8 @@ public class AdminAuthInterceptor implements HandlerInterceptor {
             if (adminAuth.isEmpty()) {
                 return true;
             }
-            authHandler.validateAuthority(request, List.of(MemberRole.ADMIN));
+            Long memberId = authHandler.validateAuthority(request, List.of(MemberRole.ADMIN));
+            request.setAttribute(MEMBER_ID, memberId);
             return true;
         }
         return true;
