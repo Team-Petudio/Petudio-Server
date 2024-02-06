@@ -4,8 +4,9 @@ DROP TABLE IF EXISTS `tickets`;
 DROP TABLE IF EXISTS `pets`;
 DROP TABLE IF EXISTS `concepts`;
 DROP TABLE IF EXISTS `albums`;
-DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `feeds`;
 DROP TABLE IF EXISTS `gifts`;
+DROP TABLE IF EXISTS `likes`;
 
 
 CREATE TABLE `members`
@@ -80,17 +81,27 @@ CREATE TABLE `albums`
     `modified_at`    timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `posts`
+CREATE TABLE `feeds`
 (
-    `post_id`           bigint AUTO_INCREMENT PRIMARY KEY,
+    `feed_id`           bigint AUTO_INCREMENT PRIMARY KEY,
     `pet_id`            bigint       NOT NULL,
     `member_id`         bigint       NOT NULL,
     `concept_id`        bigint       NOT NULL,
     `profile_image_uri` varchar(300) NOT NULL,
-    `like`              int          NOT NULL,
     `created_at`        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `modified_at`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE `likes`
+(
+    `like_id`     bigint AUTO_INCREMENT PRIMARY KEY,
+    `feed_id`     bigint    NOT NULL,
+    `member_id`   bigint    NOT NULL,
+    `is_valid`    boolean   NOT NULL,
+    `created_at`  timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE `gifts`
 (
