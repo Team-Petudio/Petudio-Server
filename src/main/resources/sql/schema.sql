@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS `pets`;
 DROP TABLE IF EXISTS `concepts`;
 DROP TABLE IF EXISTS `albums`;
 DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `gifts`;
 
 
 CREATE TABLE `members`
@@ -89,4 +90,14 @@ CREATE TABLE `posts`
     `like`              int          NOT NULL,
     `created_at`        timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `modified_at`       timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `gifts`
+(
+    `gift_id`     bigint AUTO_INCREMENT PRIMARY KEY,
+    `member_id`   bigint       NULL,
+    `gift_number` varchar(100) NOT NULL,
+    `is_used`     boolean      NOT NULL,
+    `created_at`  datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at` datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
