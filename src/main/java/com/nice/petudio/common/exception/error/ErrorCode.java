@@ -14,6 +14,7 @@ public enum ErrorCode {
     INVALID_JWT_TOKEN_EXCEPTION("V005", "존재하지 않거나 잘못된 JWT 토큰 형식입니다."), // JWT 토큰 값에 이상이 있을 경우
     INVALID_OAUTH2_ACCESS_TOKEN_EXCEPTION("V006", "존재하지 않거나 잘못된 OAuth2 Access 토큰 입니다."),
     NO_RESOURCE_FOUND_EXCEPTION("V007", "존재하지 않는 API 주소입니다."),
+    ALREADY_USED_GIFT_EXCEPTION("V008", "이미 사용된 기프트 입니다."),
 
     // UnAuthorized Exception
     UNAUTHORIZED_JWT_EXCEPTION("U001", "JWT 토큰이 유효하지 않습니다. 다시 로그인 해주세요."), // 인증에 실패했을 경우
@@ -26,6 +27,7 @@ public enum ErrorCode {
     NOT_FOUND_MEMBER_INFO_EXCEPTION("N002", "탈퇴했거나 존재하지 않는 회원 정보입니다."),
     NOT_FOUND_CONCEPT_EXCEPTION("N003", "존재하지 않는 컨셉입니다."),
     NOT_FOUND_PET_INFO_EXCEPTION("N004", "존재하지 않는 애완동물 정보입니다."),
+    NOT_FOUND_GIFT_EXCEPTION("N005","존재하지 않는 기프트 입니다."),
 
     // Conflict Exception
     CONFLICT_EXCEPTION("C001", "이미 존재하는 데이터입니다."),

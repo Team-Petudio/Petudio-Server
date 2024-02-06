@@ -2,6 +2,7 @@ package com.nice.petudio.common.auth.resolver;
 
 import static com.nice.petudio.common.auth.auth.AuthInterceptor.MEMBER_ID;
 
+import com.nice.petudio.common.auth.admin.Admin;
 import com.nice.petudio.common.auth.auth.Auth;
 import com.nice.petudio.common.exception.model.InternalServerException;
 import com.nice.petudio.common.exception.error.ErrorCode;
@@ -26,7 +27,8 @@ public class MemberIdResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) {
         Optional<Auth> auth = Optional.ofNullable(parameter.getMethodAnnotation(Auth.class));
-        if (auth.isEmpty()) {
+        Optional<Admin> admin = Optional.ofNullable(parameter.getMethodAnnotation(Admin.class));
+        if (auth.isEmpty() && admin.isEmpty()) {
             throw new InternalServerException(ErrorCode.INTERNAL_SERVER_EXCEPTION,
                     "@MemberId 애노테이션을 적용한 메서드에 Auth 관련 애노테이션이 존재하지 않습니다.");
         }

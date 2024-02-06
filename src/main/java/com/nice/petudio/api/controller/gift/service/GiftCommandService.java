@@ -1,24 +1,43 @@
 package com.nice.petudio.api.controller.gift.service;
 
 import com.nice.petudio.api.controller.gift.dto.GiftGenerateResponse;
+import com.nice.petudio.common.exception.error.ErrorCode;
+import com.nice.petudio.common.exception.model.ValidationException;
 import com.nice.petudio.domain.gift.Gift;
 import com.nice.petudio.domain.gift.repository.GiftRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class GiftCommandService {
     private final GiftRepository giftRepository;
     private final GiftCodeGenerator giftCodeGenerator;
 
-    public GiftGenerateResponse generateGift() {
+    public GiftGenerateResponse generateGift(final Long memberId) {
         String giftCode = giftCodeGenerator.generate();
-        Gift gift = Gift.newInstance(giftCode);
+        Gift gift = Gift.newInstance(memberId, giftCode);
 
         giftRepository.save(gift);
         return GiftGenerateResponse.from(giftCode);
+    }
+
+    public void useGift(final Long memberId, final String giftCode) {
+        Gift gift = GiftServiceUtils.findByGiftId(giftRepository, giftCode);
+        validateGiftIsNotUsed(gift);
+
+        gift.use(memberId);
+        log.info(String.format("[기프트 사용] 기프트 (GIFT_ID: %d)가 회원 (MEMBER_ID: %d)에 의해 사용되었습니다.", gift.getId(), memberId));
+    }
+
+    private void validateGiftIsNotUsed(Gift gift) {
+        if(gift.isUsed()) {
+            throw new ValidationException(ErrorCode.ALREADY_USED_GIFT_EXCEPTION, 
+                    String.format("이미 사용된 기프트 (GIFT_ID: %d) 입니다.", gift.getId()));
+        }
     }
 }
