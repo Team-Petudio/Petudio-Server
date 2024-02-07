@@ -8,8 +8,7 @@ import lombok.Getter;
 @Getter
 public enum ConceptMessageType {
     NAME("name"),
-    DESCRIPTION("description"),
-    TARGET("target");
+    DESCRIPTION("description");
 
     private final String type;
 }
