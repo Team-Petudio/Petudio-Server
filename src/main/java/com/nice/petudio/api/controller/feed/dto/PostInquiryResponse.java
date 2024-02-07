@@ -5,7 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record PostInquiryResponse(Long feedId, Long memberId, Long petId, Long conceptId, String profileImageUri, long likeCount) {
+public record PostInquiryResponse(Long feedId, Long memberId, Long petId, Long conceptId, String profileImageUri,
+                                  long likeCount, boolean isLiked) {
 
     public static PostInquiryResponse fromEntity(final Feed feed, final long likeCount) {
         return PostInquiryResponse.builder()
@@ -15,6 +16,19 @@ public record PostInquiryResponse(Long feedId, Long memberId, Long petId, Long c
                 .conceptId(feed.getConceptId())
                 .profileImageUri(feed.getProfileImageUri())
                 .likeCount(likeCount)
+                .isLiked(false)
+                .build();
+    }
+
+    public static PostInquiryResponse fromEntity(final Feed feed, final long likeCount, boolean isLiked) {
+        return PostInquiryResponse.builder()
+                .feedId(feed.getId())
+                .memberId(feed.getMemberId())
+                .petId(feed.getPetId())
+                .conceptId(feed.getConceptId())
+                .profileImageUri(feed.getProfileImageUri())
+                .likeCount(likeCount)
+                .isLiked(isLiked)
                 .build();
     }
 }

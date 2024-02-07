@@ -2,6 +2,7 @@ package com.nice.petudio.domain.feedlike.repository;
 
 import static com.nice.petudio.domain.feed.QFeed.feed;
 import static com.nice.petudio.domain.feedlike.QLike.like;
+import static com.nice.petudio.domain.member.QMember.member;
 
 import com.nice.petudio.domain.feedlike.Like;
 import com.querydsl.core.Tuple;
@@ -42,5 +43,15 @@ public class LikeRepositoryImpl implements LikeRepositoryCustom {
         }
 
         return feedIdToLikeCount;
+    }
+
+    @Override
+    public List<Long> findMemberLikedFeedIds(Long memberId, List<Long> feedIds) {
+        return queryFactory.select(like.feedId)
+                .from(like)
+                .where(like.feedId.in(feedIds))
+                .where(like.memberId.eq(memberId))
+                .where(like.isValid.eq(true))
+                .fetch();
     }
 }
