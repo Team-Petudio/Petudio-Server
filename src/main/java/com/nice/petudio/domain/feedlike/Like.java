@@ -43,4 +43,8 @@ public class Like extends BaseEntity {
                 .isValid(true)
                 .build();
     }
+
+    public void changeValidStatus() {
+        isValid = !isValid;
+    }
 }
