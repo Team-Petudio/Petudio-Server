@@ -2,6 +2,7 @@ package com.nice.petudio.api.controller.auth;
 
 import com.nice.petudio.api.controller.auth.dto.request.LoginRequest;
 import com.nice.petudio.api.controller.auth.dto.request.ReissueRequest;
+import com.nice.petudio.api.controller.auth.dto.response.LoginResponse;
 import com.nice.petudio.api.controller.auth.service.AuthService;
 import com.nice.petudio.api.controller.auth.service.AuthServiceProvider;
 import com.nice.petudio.api.controller.auth.service.CommonAuthService;
@@ -43,7 +44,7 @@ public class AuthController {
 
         addTokensToCookie(createTokenService.createTokenInfo(memberId), response);
 
-        return ApiResponse.success();
+        return ApiResponse.success(new LoginResponse(memberId));
     }
 
     @Operation(summary = "[인증] 로그아웃")
