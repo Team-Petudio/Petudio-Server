@@ -9,7 +9,10 @@ import com.nice.petudio.domain.album.Album;
 import com.nice.petudio.domain.album.repository.AlbumRepository;
 import com.nice.petudio.domain.feed.Feed;
 import com.nice.petudio.domain.feed.repository.FeedRepository;
+import com.nice.petudio.domain.feedlike.Like;
+import com.nice.petudio.domain.feedlike.repository.LikeRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class FeedCommandService {
     private final FeedRepository feedRepository;
+    private final LikeRepository likeRepository;
     private final AlbumRepository albumRepository;
 
     public void postConceptPhoto(final Long memberId, final PostConceptPhotoRequest request) {
@@ -48,5 +52,16 @@ public class FeedCommandService {
             throw new ValidationException(ErrorCode.INVALID_ALBUM_OWNER_EXCEPTION,
                     String.format("피드 게시를 요청한 앨범ID (%d)의 사진은 맴버ID (%d)의 소유가 아닙니다.", request.albumId(), memberId));
         }
+    }
+
+    public void likePost(Long memberId, Long feedId) {
+        Optional<Like> like = likeRepository.findByMemberAndFeedId(memberId, feedId);
+        // 이미 feedId,memberId에 해당하는 Like 레코드가 존재하면 valid 상태만 변경
+        if(like.isPresent()) {
+            like.get().changeValidStatus();
+            return;
+        }
+        // 존재하지 않으면 Like 레코드 생성
+        likeRepository.save(Like.newInstance(memberId, feedId));
     }
 }

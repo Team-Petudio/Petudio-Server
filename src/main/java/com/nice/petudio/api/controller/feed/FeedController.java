@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +37,15 @@ public class FeedController {
     // TODO: 커서 기반 무한스크롤 방식으로 개선
     @Operation(summary = "피드의 포스트 조회")
     @GetMapping("/feeds")
-    public ApiResponse<PostsInquiryResponse> getPostsAtTheFeed() {
-        return ApiResponse.success(feedQueryService.inquiryPosts());
+    public ApiResponse<PostsInquiryResponse> getRecommendedPost() {
+        return ApiResponse.success(feedQueryService.inquiryRecommendedPosts());
+    }
+
+    @Operation(summary = "[인증] 피드의 포스트 좋아요")
+    @Auth
+    @PatchMapping("/feed/like/{feedId}")
+    public ApiResponse<?> likePost(@MemberId final Long memberId, @PathVariable final Long feedId) {
+        feedCommandService.likePost(memberId, feedId);
+        return ApiResponse.success();
     }
 }
