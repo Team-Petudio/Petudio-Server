@@ -4,7 +4,6 @@ import static com.nice.petudio.domain.gift.QGift.gift;
 
 import com.nice.petudio.domain.gift.Gift;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
