@@ -2,8 +2,6 @@ package com.nice.petudio.api.controller.gift.service;
 
 import com.nice.petudio.api.controller.gift.dto.GiftGenerateResponse;
 import com.nice.petudio.api.controller.ticket.service.TicketServiceUtils;
-import com.nice.petudio.common.exception.error.ErrorCode;
-import com.nice.petudio.common.exception.model.ValidationException;
 import com.nice.petudio.domain.gift.Gift;
 import com.nice.petudio.domain.gift.repository.GiftRepository;
 import com.nice.petudio.domain.member.point.Ticket;
@@ -32,7 +30,7 @@ public class GiftCommandService {
     }
 
     public void useGift(final Long memberId, final String giftCode) {
-        Gift gift = GiftServiceUtils.findByGiftId(giftRepository, giftCode);
+        Gift gift = GiftServiceUtils.findByGiftCode(giftRepository, giftCode);
         gift.use(memberId, LocalDateTime.now());
 
         Ticket ticket = TicketServiceUtils.findTicketByMemberId(ticketRepository, memberId);

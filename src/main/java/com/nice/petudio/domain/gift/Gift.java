@@ -73,7 +73,7 @@ public class Gift extends BaseEntity {
     public void validateNotExpired(LocalDateTime now) {
         if(isExpired(now)) {
             throw new ValidationException(ErrorCode.EXPIRED_GIFT_EXCEPTION,
-                    String.format("사용 기한이 만료된 기프트 (GIFT_ID: %d) 입니다."));
+                    String.format("사용 기한이 만료된 기프트 (GIFT_ID: %d) 입니다.", this.id));
         }
     }
 
