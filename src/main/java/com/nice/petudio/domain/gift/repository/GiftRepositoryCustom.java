@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface GiftRepositoryCustom {
     Optional<Gift> findByGiftCode(String giftCode);
-    List<Gift> findUsableGiftsByBuyerId(Long memberId);
+    List<Gift> findGiftsByBuyerId(Long memberId);
 }
