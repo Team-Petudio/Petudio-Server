@@ -55,8 +55,10 @@ public class Gift extends BaseEntity {
                 .build();
     }
 
-    public void use(final Long userId) {
+    public void use(final Long userId, LocalDateTime now) {
         validateNotUsed();
+        validateNotExpired(now);
+
         this.userId = userId;
         isUsed = true;
     }
@@ -66,5 +68,16 @@ public class Gift extends BaseEntity {
             throw new ValidationException(ErrorCode.ALREADY_USED_GIFT_EXCEPTION,
                     String.format("이미 사용된 기프트 (GIFT_ID: %d) 입니다.", this.id));
         }
+    }
+
+    public void validateNotExpired(LocalDateTime now) {
+        if(isExpired(now)) {
+            throw new ValidationException(ErrorCode.EXPIRED_GIFT_EXCEPTION,
+                    String.format("사용 기한이 만료된 기프트 (GIFT_ID: %d) 입니다."));
+        }
+    }
+
+    public boolean isExpired(LocalDateTime now) {
+        return expiredAt.isBefore(now);
     }
 }

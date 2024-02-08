@@ -8,6 +8,7 @@ import com.nice.petudio.domain.gift.Gift;
 import com.nice.petudio.domain.gift.repository.GiftRepository;
 import com.nice.petudio.domain.member.point.Ticket;
 import com.nice.petudio.domain.member.point.repository.TicketRepository;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class GiftCommandService {
 
     public void useGift(final Long memberId, final String giftCode) {
         Gift gift = GiftServiceUtils.findByGiftId(giftRepository, giftCode);
-        gift.use(memberId);
+        gift.use(memberId, LocalDateTime.now());
 
         Ticket ticket = TicketServiceUtils.findTicketByMemberId(ticketRepository, memberId);
         ticket.addAmount(1);

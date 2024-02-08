@@ -23,7 +23,7 @@ public class GiftQueryService {
         List<GiftRetrieveResponse> giftsInfo = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
         for (Gift gift : gifts) {
-            giftsInfo.add(GiftRetrieveResponse.fromEntity(gift, gift.getExpiredAt().isAfter(now)));
+            giftsInfo.add(GiftRetrieveResponse.fromEntity(gift, now));
         }
 
         return new GiftsRetrieveResponse(giftsInfo);
