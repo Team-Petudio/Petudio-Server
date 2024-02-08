@@ -1,6 +1,8 @@
 package com.nice.petudio.domain.gift;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nice.petudio.common.exception.error.ErrorCode;
+import com.nice.petudio.common.exception.model.ValidationException;
 import com.nice.petudio.domain.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,11 +56,15 @@ public class Gift extends BaseEntity {
     }
 
     public void use(final Long userId) {
+        validateNotUsed();
         this.userId = userId;
         isUsed = true;
     }
 
-    public boolean isUsed() {
-        return isUsed;
+    private void validateNotUsed() {
+        if(this.isUsed) {
+            throw new ValidationException(ErrorCode.ALREADY_USED_GIFT_EXCEPTION,
+                    String.format("이미 사용된 기프트 (GIFT_ID: %d) 입니다.", this.id));
+        }
     }
 }
