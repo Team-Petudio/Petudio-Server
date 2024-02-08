@@ -22,11 +22,9 @@ public class GiftRepositoryImpl implements GiftRepositoryCustom {
     }
 
     @Override
-    public List<Gift> findUsableGiftsByBuyerId(Long memberId) {
+    public List<Gift> findGiftsByBuyerId(Long memberId) {
         return queryFactory.selectFrom(gift)
                 .where(gift.buyerId.eq(memberId))
-                .where(gift.isUsed.eq(false))
-                .where(gift.expiredAt.gt(LocalDateTime.now()))
                 .fetch();
     }
 }

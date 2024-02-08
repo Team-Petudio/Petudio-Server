@@ -44,4 +44,8 @@ public class Ticket extends BaseEntity {
                 .amount(0)
                 .build();
     }
+
+    public void addAmount(int amount) {
+        this.amount += amount;
+    }
 }

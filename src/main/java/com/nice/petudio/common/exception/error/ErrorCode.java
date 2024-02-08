@@ -28,6 +28,7 @@ public enum ErrorCode {
     NOT_FOUND_CONCEPT_EXCEPTION("N003", "존재하지 않는 컨셉입니다."),
     NOT_FOUND_PET_INFO_EXCEPTION("N004", "존재하지 않는 애완동물 정보입니다."),
     NOT_FOUND_GIFT_EXCEPTION("N005","존재하지 않는 기프트 입니다."),
+    NOT_FOUND_TICKET_EXCEPTION("N006", "티켓 정보가 존재하지 않습니다.."),
 
     // Conflict Exception
     CONFLICT_EXCEPTION("C001", "이미 존재하는 데이터입니다."),
