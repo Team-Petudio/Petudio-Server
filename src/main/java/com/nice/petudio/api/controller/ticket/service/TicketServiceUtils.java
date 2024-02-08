@@ -10,6 +10,6 @@ public class TicketServiceUtils {
     public static Ticket findTicketByMemberId(TicketRepository ticketRepository, final Long memberId) {
         return ticketRepository.findByMemberId(memberId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_TICKET_EXCEPTION,
-                        String.format("회원ID(%d) 의 티켓 정보가 존재하지 않습니다.")));
+                        String.format("회원ID(%d) 의 티켓 정보가 존재하지 않습니다.", memberId)));
     }
 }
