@@ -15,6 +15,7 @@ public enum ErrorCode {
     INVALID_OAUTH2_ACCESS_TOKEN_EXCEPTION("V006", "존재하지 않거나 잘못된 OAuth2 Access 토큰 입니다."),
     NO_RESOURCE_FOUND_EXCEPTION("V007", "존재하지 않는 API 주소입니다."),
     ALREADY_USED_GIFT_EXCEPTION("V008", "이미 사용된 기프트 입니다."),
+    EXPIRED_GIFT_EXCEPTION("V009", "사용 기한이 만료된 기프트 입니다."),
 
     // UnAuthorized Exception
     UNAUTHORIZED_JWT_EXCEPTION("U001", "JWT 토큰이 유효하지 않습니다. 다시 로그인 해주세요."), // 인증에 실패했을 경우

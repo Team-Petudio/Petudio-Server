@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public record GiftRetrieveResponse(String giftCode, boolean isUsed, LocalDateTime expiredAt, boolean isExpired) {
 
-    public static GiftRetrieveResponse fromEntity(final Gift gift, boolean isExpired) {
-        return new GiftRetrieveResponse(gift.getCode(), gift.getIsUsed(), gift.getExpiredAt(), isExpired);
+    public static GiftRetrieveResponse fromEntity(final Gift gift, LocalDateTime now) {
+        return new GiftRetrieveResponse(gift.getCode(), gift.getIsUsed(), gift.getExpiredAt(), gift.isExpired(now));
     }
 }
