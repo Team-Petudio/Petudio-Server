@@ -23,7 +23,3 @@ springdoc:
     path: /api-docs/json
     groups:
       enabled: true
-
-deploy:
-  dev:
-    url: ${DEV_SERVER_URL}
