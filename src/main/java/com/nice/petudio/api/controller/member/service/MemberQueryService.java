@@ -24,7 +24,7 @@ public class MemberQueryService {
         Ticket ticket = PointServiceUtils.findPointByMemberId(ticketRepository, memberId);
         Setting setting = SettingServiceUtils.findSettingByMemberId(settingRepository, memberId);
 
-        return MemberMyPageResponse.of(member.getSocialType(), member.getEmail(), setting.getNotificationStatus(),
+        return MemberMyPageResponse.of(member, setting.getNotificationStatus(),
                 ticket.getAmount());
     }
 }
