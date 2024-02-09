@@ -69,7 +69,7 @@ public class FeedCommandService {
     public void deletePost(Long memberId, Long feedId) {
         Feed feed = feedRepository.findFeedByMemberAndFeedId(memberId, feedId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_FEED_EXCEPTION,
-                        String.format("회원ID (%d) 가 올린 피드ID(%d) 가 존재하지 않습니다.", memberId, feedId)));
+                        String.format("회원ID (%d) 가 올린 피드ID (%d) 가 존재하지 않습니다.", memberId, feedId)));
 
         feedRepository.delete(feed);
     }
