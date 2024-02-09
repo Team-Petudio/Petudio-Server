@@ -5,6 +5,7 @@ import static com.nice.petudio.domain.feed.QFeed.feed;
 import com.nice.petudio.domain.feed.Feed;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 
@@ -26,5 +27,14 @@ public class FeedRepositoryImpl implements FeedRepositoryCustom {
         return queryFactory.selectFrom(feed)
                 .where(feed.id.in(ids))
                 .fetch();
+    }
+
+    @Override
+    public Optional<Feed> findFeedByMemberAndFeedId(Long memberId, Long feedId) {
+        return Optional.ofNullable(queryFactory
+                .selectFrom(feed)
+                .where(feed.memberId.eq(memberId))
+                .where(feed.id.eq(feedId))
+                .fetchOne());
     }
 }
