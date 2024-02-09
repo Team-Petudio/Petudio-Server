@@ -32,6 +32,7 @@ public enum ErrorCode {
     NOT_FOUND_GIFT_EXCEPTION("N005","존재하지 않는 기프트 입니다."),
     NOT_FOUND_ALBUM_EXCEPTION("N006","존재하지 않는 앨범 입니다."),
     NOT_FOUND_TICKET_EXCEPTION("N007", "티켓 정보가 존재하지 않습니다."),
+    NOT_FOUND_FEED_EXCEPTION("N008", "피드 정보가 존재하지 않습니다."),
 
     // Conflict Exception
     CONFLICT_EXCEPTION("C001", "이미 존재하는 데이터입니다."),
@@ -43,7 +44,8 @@ public enum ErrorCode {
     INTERNAL_SERVER_EXCEPTION("I001", "서버 내부에서 에러가 발생하였습니다."),
 
     // Bad Gateway Exception
-    BAD_GATEWAY_EXCEPTION("B001", "외부 연동 중 에러가 발생하였습니다.");
+    BAD_GATEWAY_EXCEPTION("B001", "외부 연동 중 에러가 발생하였습니다.")
+    ;
 
 
     private final String code;

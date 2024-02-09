@@ -4,6 +4,7 @@ import com.nice.petudio.api.controller.album.service.AlbumServiceUtils;
 import com.nice.petudio.api.controller.feed.dto.PostConceptPhotoRequest;
 import com.nice.petudio.common.exception.error.ErrorCode;
 import com.nice.petudio.common.exception.model.ConflictException;
+import com.nice.petudio.common.exception.model.NotFoundException;
 import com.nice.petudio.common.exception.model.ValidationException;
 import com.nice.petudio.domain.album.Album;
 import com.nice.petudio.domain.album.repository.AlbumRepository;
@@ -63,5 +64,13 @@ public class FeedCommandService {
         }
         // 존재하지 않으면 Like 레코드 생성
         likeRepository.save(Like.newInstance(memberId, feedId));
+    }
+
+    public void deletePost(Long memberId, Long feedId) {
+        Feed feed = feedRepository.findFeedByMemberAndFeedId(memberId, feedId)
+                .orElseThrow(() -> new NotFoundException(ErrorCode.NOT_FOUND_FEED_EXCEPTION,
+                        String.format("회원ID (%d) 가 올린 피드ID(%d) 가 존재하지 않습니다.", memberId, feedId)));
+
+        feedRepository.delete(feed);
     }
 }

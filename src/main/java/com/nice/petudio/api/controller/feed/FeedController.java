@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +40,8 @@ public class FeedController {
     // TODO: 커서 기반 무한스크롤 방식으로 개선
     @Operation(summary = "피드 조회")
     @GetMapping("/feeds")
-    public ApiResponse<PostsInquiryResponse> getRecommendedPost(@RequestParam(required = false) final Optional<Long> memberId) {
+    public ApiResponse<PostsInquiryResponse> getRecommendedPost(
+            @RequestParam(required = false) final Optional<Long> memberId) {
         return ApiResponse.success(feedQueryService.inquiryRecommendedPosts(memberId));
     }
 
@@ -48,6 +50,14 @@ public class FeedController {
     @PatchMapping("/feed/like/{feedId}")
     public ApiResponse<?> likePost(@MemberId final Long memberId, @PathVariable final Long feedId) {
         feedCommandService.likePost(memberId, feedId);
+        return ApiResponse.success();
+    }
+
+    @Operation(summary = "[인증] 피드 포스트 삭제")
+    @Auth
+    @DeleteMapping("/feed/delete/{feedId}")
+    public ApiResponse<?> deletePost(@MemberId final Long memberId, @PathVariable final Long feedId) {
+        feedCommandService.deletePost(memberId, feedId);
         return ApiResponse.success();
     }
 }
