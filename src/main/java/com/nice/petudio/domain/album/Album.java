@@ -29,6 +29,12 @@ public class Album extends BaseEntity {
     @Column(name = "pet_id", nullable = false)
     private Long petId;
 
-    @Column(name = "profile_images", nullable = false)
-    private String profileImages; // JSON type
+    @Column(name = "concept_id", nullable = false)
+    private Long conceptId;
+
+    @Column(name = "thumbnail_image_uri", nullable = false)
+    private String thumbnailImageUri;
+
+    @Column(name = "profile_image_uris", nullable = false)
+    private String profileImageUris; // JSON type
 }
