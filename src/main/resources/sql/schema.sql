@@ -33,11 +33,11 @@ CREATE TABLE `settings`
 CREATE TABLE `tickets`
 (
     `ticket_id`     bigint AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    `member_id`     bigint                            NOT NULL,
-    `ticket_type`   varchar(30)                       NOT NULL,
-    `ticket_amount` int                               NOT NULL,
-    `created_at`    datetime                          NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `modified_at`   datetime                          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `member_id`     bigint      NOT NULL,
+    `ticket_type`   varchar(30) NOT NULL,
+    `ticket_amount` int         NOT NULL,
+    `created_at`    datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`   datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `concepts`
@@ -64,7 +64,7 @@ CREATE TABLE `pets`
     `member_id`                   bigint       NOT NULL,
     `pet_name`                    varchar(30)  NOT NULL,
     `pet_fur_color`               varchar(30)  NOT NULL,
-    `pet_image_s3_directory_path` varchar(100) NOT NULL,
+    `pet_image_s3_directory_path` varchar(200) NOT NULL,
     `pet_photos`                  json         NOT NULL,
     `created_at`                  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `modified_at`                 timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -72,13 +72,14 @@ CREATE TABLE `pets`
 
 CREATE TABLE `albums`
 (
-    `album_id`       bigint AUTO_INCREMENT PRIMARY KEY,
-    `pet_id`         bigint    NOT NULL,
-    `member_id`      bigint    NOT NULL,
-    `concept_id`     bigint    NOT NULL,
-    `profile_images` json      NULL,
-    `created_at`     timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `modified_at`    timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `album_id`            bigint AUTO_INCREMENT PRIMARY KEY,
+    `pet_id`              bigint    NOT NULL,
+    `member_id`           bigint    NOT NULL,
+    `concept_id`          bigint    NOT NULL,
+    `thumbnail_image_uri` varchar(200) NULL,
+    `profile_image_uris`  json  NULL,
+    `created_at`          timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`         timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `feeds`
@@ -107,7 +108,7 @@ CREATE TABLE `gifts`
 (
     `gift_id`     bigint AUTO_INCREMENT PRIMARY KEY,
     `buyer_id`    bigint      NOT NULL,
-    `user_id`     bigint      NULL,
+    `user_id`     bigint NULL,
     `gift_code`   varchar(32) NOT NULL,
     `is_used`     boolean     NOT NULL,
     `expired_at`  datetime    NOT NULL,
