@@ -16,7 +16,6 @@ public class AlbumQueryService {
     private final AlbumRepository albumRepository;
 
     public AlbumRetrieveResponses findMemberAlbumInfos(Long memberId) {
-
         List<AlbumRetrieveResponse> albumInfos = albumRepository.findAlbumInfosByMemberId(memberId);
         return new AlbumRetrieveResponses(albumInfos);
     }
