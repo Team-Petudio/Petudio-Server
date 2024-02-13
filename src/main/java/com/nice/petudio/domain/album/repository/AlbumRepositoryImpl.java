@@ -1,6 +1,9 @@
 package com.nice.petudio.domain.album.repository;
 
 import com.nice.petudio.api.controller.album.dto.AlbumRetrieveResponse;
+import com.nice.petudio.api.controller.album.dto.AlbumRetrieveResponses;
+import com.nice.petudio.api.controller.album.dto.ProfileImageUrisResponse;
+import com.nice.petudio.common.util.JsonUtils;
 import com.nice.petudio.domain.album.Album;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -27,23 +30,23 @@ public class AlbumRepositoryImpl implements AlbumRepositoryCustom {
 
     @Override
     public List<AlbumRetrieveResponse> findAlbumInfosByMemberId(Long memberId) {
-        List<Tuple> fetch = queryFactory
+        List<Tuple> result = queryFactory
                 .select(album, pet.name, concept.info)
                 .from(album)
-                .join(album).on(album.petId.eq(pet.id))
-                .join(album).on(album.conceptId.eq(concept.id))
+                .join(pet).on(pet.id.eq(album.petId))
+                .join(concept).on(concept.id.eq(album.conceptId))
                 .where(album.memberId.eq(memberId))
                 .fetch();
 
-        List<AlbumRetrieveResponse> results = new ArrayList<>();
-        for (Tuple tuple : fetch) {
-            Album resultAlbum = tuple.get(album);
-            String petName = tuple.get(pet.name);
-            String conceptName = tuple.get(concept.info).getConceptName();
-
-            results.add(AlbumRetrieveResponse.of(resultAlbum, petName, conceptName));
+        List<AlbumRetrieveResponse> albumRetrieveResponses = new ArrayList<>();
+        for (Tuple albumInfo : result) {
+            Album resultAlbum = albumInfo.get(album);
+            String petName = albumInfo.get(pet.name);
+            String conceptName = albumInfo.get(concept.info).getConceptName();
+            ProfileImageUrisResponse imageUris = JsonUtils.deserialize(resultAlbum.getProfileImageUris(), ProfileImageUrisResponse.class);
+            albumRetrieveResponses.add(AlbumRetrieveResponse.of(resultAlbum, imageUris, petName, conceptName));
         }
 
-        return results;
+        return albumRetrieveResponses;
     }
 }

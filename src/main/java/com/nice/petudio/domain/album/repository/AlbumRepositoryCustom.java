@@ -8,5 +8,6 @@ import java.util.List;
 public interface AlbumRepositoryCustom {
 
     List<Album> findByMemberId(Long memberId);
+
     List<AlbumRetrieveResponse> findAlbumInfosByMemberId(Long memberId);
 }
